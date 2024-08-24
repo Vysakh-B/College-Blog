@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Revolve - Personal Magazine blog Template</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- theme meta -->
+    <meta name="theme-name" content="revolve" />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href={% static "images/favicon.ico" %} type={% static "image/x-icon" %}>
+
+    <!-- THEME CSS
+	================================================== -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href={% static "plugins/bootstrap/css/bootstrap.min.css" %}>
+    <!-- Themify -->
+    <link rel="stylesheet" href={% static "plugins/themify/css/themify-icons.css" %}>
+    <link rel="stylesheet" href={% static "plugins/slick-carousel/slick-theme.css" %}>
+    <link rel="stylesheet" href={% static "plugins/slick-carousel/slick.css" %}>
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href={% static "plugins/owl-carousel/owl.carousel.min.css" %}>
+    <link rel="stylesheet" href={% static "plugins/owl-carousel/owl.theme.default.min.css" %}>
+    <link rel="stylesheet" href={% static "plugins/magnific-popup/magnific-popup.css" %}>
+    <!-- manin stylesheet -->
+    <link rel="stylesheet" href={% static "css/style.css" %}>
+</head>
+
+<body>
+
+    <header class="header-top bg-grey justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-2 col-md-4 text-center d-none d-lg-block">
+					<a class="navbar-brand " href={% url 'home' %}>
+						<img src={% static "images/logo.png" %} alt="" class="img-fluid">
+					</a>
+				</div>
+
+				<div class="col-lg-8 col-md-12">
+					<nav class="navbar navbar-expand-lg navigation-2 navigation">
+						<a class="navbar-brand text-uppercase d-lg-none" href="#">
+							<img src={% static "images/logo.png" %} alt="" class="img-fluid">
+						</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+							aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="ti-menu"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbar-collapse">
+							<ul id="menu" class="menu navbar-nav mx-auto">
+                                <li class="nav-item"><a href={% url 'home' %} class="nav-link">Home</a></li>
+
+                                <li class="nav-item"><a href={% url 'feed' %} class="nav-link">Feed</a></li>
+
+
+								<li class="nav-item"><a href={% url 'create' %} class="nav-link">Create</a></li>
+								<!-- <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">
+										Post Format
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+										<a class="dropdown-item" href="post-video.html">Video Formats</a>
+										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
+										<a class="dropdown-item" href="post-link.html">Quote Format</a>
+										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
+										<a class="dropdown-item" href="post-image.html">Image Format</a>
+									</div>
+								</li> -->
+								<li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
+
+								<li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li>
+								<li class="nav-item"><a href={% url 'magazine' %} class="nav-link">Magazine</a></li>
+
+							</ul>
+
+							<ul class="list-inline mb-0 d-block d-lg-none">
+								<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+
+				<div class="col-lg-2 col-md-4 col-6">
+					<div class="header-socials-2 text-right d-none d-lg-block">
+						<ul class="list-inline mb-0">
+							<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+    <div class="container">
+
+
+        <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <form method="post" role="form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="title" placeholder="Title" required/>
+                  </div>
+                  <div class="form-group">
+                    <label> Image </label>
+                    <div class="input-group">
+                      
+                      <span class="input-group-btn">
+                        <span class="btn btn-primary btn-file">
+                          Browse <input type="file" name="imgs" required>
+                        </span>
+                      </span>
+                      <input type="text" class="form-control" readonly required>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control bcontent" name="content"  onKeyUp="SetNewSize(this);" cols="5" rows="4"></textarea>
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" name="Submit" value="Publish" class="btn btn-primary form-control" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+        <style>.btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+        
+        input[readonly] {
+          background-color: white !important;
+          cursor: text !important;
+        }
+        
+        {% comment %} this is only due to codepen display don't use this outside of codepen {% endcomment %}
+        .container {
+          padding-top: 20px;
+        }</style>
+        <section class="footer-2 section-padding gray-bg pb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="subscribe-footer text-center">
+                            <div class="form-group mb-0">
+                                <h2 class="mb-3">Subscribe Newsletter</h2>
+                                <p class="mb-4">Subscribe my Newsletter for new blog posts , tips and info.
+                                <p>
+                                <div class="form-group form-row align-items-center mb-0">
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" placeholder="Email Address">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="#" class="btn btn-dark ">Subscribe</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-btm mt-5 pt-4 border-top">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-inline footer-socials-2 text-center">
+                                <li class="list-inline-item"><a href="#">Privacy policy</a></li>
+                                <li class="list-inline-item"><a href="#">Support</a></li>
+                                <li class="list-inline-item"><a href="#">About</a></li>
+                                <li class="list-inline-item"><a href="#">Contact</a></li>
+                                <li class="list-inline-item"><a href="#">Terms</a></li>
+                                <li class="list-inline-item"><a href="#">Category</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="copyright text-center ">
+                                @ copyright all reserved to <a href="https://themefisher.com/">themefisher.com</a>-2019
+                                Distribution <a href="https://themewagon.com">ThemeWagon.</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- THEME JAVASCRIPT FILES
+================================================== -->
+        <!-- initialize jQuery Library -->
+        <script src={% static "plugins/jquery/jquery.js" %}></script>
+        <!-- Bootstrap jQuery -->
+        <script src={% static "plugins/bootstrap/js/bootstrap.min.js" %}></script>
+        <script src={% static "plugins/bootstrap/js/popper.min.js" %}></script>
+        <!-- Owl caeousel -->
+        <script src={% static "plugins/owl-carousel/owl.carousel.min.js" %}></script>
+        <script src={% static "plugins/slick-carousel/slick.min.js" %}></script>
+        <script src={% static "plugins/magnific-popup/magnific-popup.js" %}></script>
+        <!-- Instagram Feed Js -->
+        <script src={% static "plugins/instafeed-js/instafeed.min.js" %}></script>
+        <!-- Google Map -->
+        <script src={% static "https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw" %}></script>
+        <script src={% static "plugins/google-map/gmap.js" %}></script>
+        <!-- main js -->
+        <script src={% static "js/custom.js" %}></script>
+
+<!-- <script>$(function() {
+    $(".bcontent").wysihtml5({
+      toolbar: {
+        "image": false
+      }
+    });
+    
+    $(document).on('change', '.btn-file :file', function() {
+      var input = $(this);
+      var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+      console.log(input.get(0).files);
+      var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
+    
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label){
+      var input = $(this).parents('.input-group').find(':text');
+      var log = numFiles > 1 ? numFiles + ' files selected' : label;
+      
+      if( input.length ) {
+        input.val(log);
+      } else {
+        if( log ){ alert(log); }
+      }
+      
+    });
+  });</script> -->
+  <script >
+    function SetNewSize(textarea){
+      if (textarea.value.length > 5){
+        textarea.cols = 20;
+        textarea.rows = 20;
+      }  else{
+         textarea.cols = 10;
+         textarea.rows = 15;
+      }
+    }
+  </script>
+</body>
+
+</html>

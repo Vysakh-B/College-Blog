@@ -1,0 +1,280 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+ @include box-sizing(border-box);
+-->
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Revolve - Personal Magazine blog Template</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- theme meta -->
+    <meta name="theme-name" content="revolve" />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href={% static "images/favicon.ico" %} type={% static "image/x-icon" %}>
+
+    <!-- THEME CSS
+	================================================== -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href={% static "plugins/bootstrap/css/bootstrap.min.css" %}>
+    <!-- Themify -->
+    <link rel="stylesheet" href={% static "plugins/themify/css/themify-icons.css" %}>
+    <link rel="stylesheet" href={% static "plugins/slick-carousel/slick-theme.css" %}>
+    <link rel="stylesheet" href={% static "plugins/slick-carousel/slick.css" %}>
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href={% static "plugins/owl-carousel/owl.carousel.min.css" %}>
+    <link rel="stylesheet" href={% static "plugins/owl-carousel/owl.theme.default.min.css" %}>
+    <link rel="stylesheet" href={% static "plugins/magnific-popup/magnific-popup.css" %}>
+    <!-- manin stylesheet -->
+    <link rel="stylesheet" href={% static "css/style.css" %}>
+</head>
+
+<body style="justify-content:space-around;">
+
+    <header class="header-top bg-grey justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-2 col-md-4 text-center d-none d-lg-block">
+					<a class="navbar-brand " href="index.html">
+						<img src={% static "images/logo.png" %} alt="" class="img-fluid">
+					</a>
+				</div>
+
+				<div class="col-lg-8 col-md-12">
+					<nav class="navbar navbar-expand-lg navigation-2 navigation">
+						<a class="navbar-brand text-uppercase d-lg-none" href={% url 'index' %}>
+							<img src={% static "images/logo.png" %} alt="" class="img-fluid">
+						</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+							aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="ti-menu"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbar-collapse">
+							<ul id="menu" class="menu navbar-nav mx-auto">
+                                <li class="nav-item"><a href={% url 'index' %} class="nav-link">Home</a></li>
+
+								
+								<li class="nav-item"><a href={% url 'signin' %} class="nav-link">Signin</a></li>
+
+								<li class="nav-item"><a href={% url 'magazine' %} class="nav-link">Magazine</a></li>
+								<!-- <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">
+										Post Format
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+										<a class="dropdown-item" href="post-video.html">Video Formats</a>
+										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
+										<a class="dropdown-item" href="post-link.html">Quote Format</a>
+										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
+										<a class="dropdown-item" href="post-image.html">Image Format</a>
+									</div>
+								</li> -->
+								<li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
+
+								<li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li>
+							</ul>
+
+							<!-- <ul class="list-inline mb-0 d-block d-lg-none">
+								<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
+							</ul> -->
+						</div>
+					</nav>
+				</div>
+
+				
+			</div>
+		</div>
+	</header>
+
+
+
+    <div class="container">
+
+
+        <div class="wrapper">
+            <form class="form-signin" method="POST" action="">
+                {% csrf_token %}
+                <h2 class="form-signin-heading">User Registration</h2>
+                
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="User name" required="" autofocus="" />
+                    {% if form.username.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.username.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
+                    {% if form.email.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="" />
+                    {% if form.password.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.password.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            
+                <div class="form-group">
+                    <label for="cars">Department:</label>
+                    <select name="department" id="cars" class="form-control">
+                        <option value="v1">Other</option>
+                        <option value="v2">MCA</option>
+                        <option value="v3">MBA</option>
+                        <option value="v4">B-Tech</option>
+                    </select>
+                    {% if form.department.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.department.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            
+                Already Registered? <a href="{% url 'signin' %}">Signin</a><br><br>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+            </form>
+            
+
+
+
+
+
+        </div>
+        </section>
+        <style>
+            @import "bourbon";
+
+            body {
+                background: #eee !important;
+            }
+
+            .wrapper {
+                margin-top: 80px;
+                margin-bottom: 80px;
+            }
+
+            .form-signin {
+                max-width: 380px;
+                padding: 15px 35px 45px;
+                margin: 0 auto;
+                background-color: #fff;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+
+                .form-signin-heading,
+                .checkbox {
+                    margin-bottom: 30px;
+                }
+
+                .checkbox {
+                    font-weight: normal;
+                }
+
+                .form-control {
+                    position: relative;
+                    font-size: 16px;
+                    height: auto;
+                    padding: 10px;
+                    
+                    box-sizing: border-box;
+
+                    &:focus {
+                        z-index: 2;
+                    }
+                }
+
+                input[type="text"] {
+                    margin-bottom: -1px;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                input[type="password"] {
+                    margin-bottom: 20px;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                }
+            }
+        </style>
+        {% comment %} <section class="footer-2 section-padding gray-bg pb-5">
+            <div class="container">
+                
+
+                <div class="footer-btm mt-5 pt-4 border-top">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-inline footer-socials-2 text-center">
+                                <li class="list-inline-item"><a href="#">Privacy policy</a></li>
+                                <li class="list-inline-item"><a href="#">Support</a></li>
+                                <li class="list-inline-item"><a href="#">About</a></li>
+                                <li class="list-inline-item"><a href="#">Contact</a></li>
+                                <li class="list-inline-item"><a href="#">Terms</a></li>
+                                <li class="list-inline-item"><a href="#">Category</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="copyright text-center ">
+                                @ copyright all reserved to <a href="https://themefisher.com/">themefisher.com</a>-2019
+                                Distribution <a href="https://themewagon.com">ThemeWagon.</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> {% endcomment %}
+
+
+        <!-- THEME JAVASCRIPT FILES
+================================================== -->
+        <!-- initialize jQuery Library -->
+        <script src={% static "plugins/jquery/jquery.js" %}></script>
+        <!-- Bootstrap jQuery -->
+        <script src={% static "plugins/bootstrap/js/bootstrap.min.js" %}></script>
+        <script src={% static "plugins/bootstrap/js/popper.min.js" %}></script>
+        <!-- Owl caeousel -->
+        <script src={% static "plugins/owl-carousel/owl.carousel.min.js" %}></script>
+        <script src={% static "plugins/slick-carousel/slick.min.js" %}></script>
+        <script src={% static "plugins/magnific-popup/magnific-popup.js" %}></script>
+        <!-- Instagram Feed Js -->
+        <script src={% static "plugins/instafeed-js/instafeed.min.js" %}></script>
+        <!-- Google Map -->
+        <script src={% static "https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw" %}></script>
+        <script src={% static "plugins/google-map/gmap.js" %}></script>
+        <!-- main js -->
+        <script src={% static "js/custom.js" %}></script>
+
+
+</body>
+
+</html>
