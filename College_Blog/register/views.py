@@ -8,6 +8,7 @@ from django.contrib.auth.models import User,auth
 # from django.contrib.auth import authenticate, login
 # from django.contrib.auth.decorators import login_required
 from . models import Profile
+from posts.models import post
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
@@ -52,8 +53,10 @@ def home(request):
     ch = request.user
     prf = Profile.objects.get(username=ch)
     change = prf.accepted
-    return render(request,'home.html',{'pased':change})
-      
+    pst = post.objects.all()
+
+    return render(request,'home.html',{'pased':change,'key':pst})
+    
 
 # def account(request):
 #     # User = get_user_model()
@@ -93,4 +96,12 @@ def account(request):
         'pic':prf.profile_picture.url,
         'name':prf.username
     }
-    return render(request,'profile.html',context)
+    
+    pst = post.objects.filter(user=prf)
+    # context2={
+    #     'ttl':pst.title,
+    #     'cnt':pst.content,
+    #     'pics':pst.blog_picture,
+    #     'dates':pst.created_at
+    # }
+    return render(request,'profile.html',{'context':context,'key':pst})

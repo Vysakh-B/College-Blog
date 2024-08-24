@@ -8,8 +8,11 @@ from django.contrib.auth import get_user_model
 # Create your views here.
 def magazine(request):
     return render(request,'magazine.html') 
-def single(request):
-    return render(request,'blog-single.html')
+def single(request,id):
+    u = request.user
+    data = Profile.objects.get(username=u)
+    pt = post.objects.get(id=id)
+    return render(request,'blog-single.html',{'detail':pt,'data':data})
 def feed(request):
     return render(request,'feed.html') 
 def create(request):

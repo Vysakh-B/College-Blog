@@ -1,4 +1,6 @@
 {% load static %}
+{% static "profile_picture" as 'baseUrl' %}
+
 <!DOCTYPE html>
 <!--
  // WEBSITE: https://themefisher.com
@@ -124,48 +126,44 @@
                                     href="#">lifestyle</a>
                             </div>
                             <h2 class="post-title mt-2">
-                                First Look At Self-Portrait's Autumn Collection
+                                {{ detail.title }}
                             </h2>
 
                             <div class="post-meta">
-                                <span class="text-uppercase font-sm letter-spacing-1 mr-3">by Liam</span>
-                                <span class="text-uppercase font-sm letter-spacing-1">January 17,2019</span>
+                                <span class="text-uppercase font-sm letter-spacing-1 mr-3">{{ detail.user }}</span>
+                                <span class="text-uppercase font-sm letter-spacing-1">{{ detail.created_at }}</span>
                             </div>
                             <div class="post-featured-image mt-5">
-                                <img src={% static "images/fashion/bg-banner.jpg" %} class="img-fluid w-100" alt="featured-image">
+                                <img src={{ detail.blog_picture.url }} class="img-fluid w-100" alt="featured-image">
                             </div>
                         </div>
                         <div class="post-body">
                             <div class="entry-content">
-                                <p> It was a cheerful prospect. I asked Perry what he thought about it; but he only
-                                    shrugged his shoulders and continued a longwinded prayer he had been at for some
-                                    time. He was wont to say that the only redeeming feature of our captivity was the
-                                    ample time it gave him for the improvisation of prayers—it was becoming an obsession
-                                    with him.</p>
-                                <h2 class="mt-4 mb-3">Perfect design & code delivered to you</h2>
+                                <p>{{ detail.content }}</p>
+                                {% comment %} <h2 class="mt-4 mb-3">Perfect design & code delivered to you</h2>
                                 <p> The Sagoths had begun to take notice of his habit of declaiming throughout entire
                                     marches. One of them asked him what he was saying—to whom he was talking. The
                                     question gave me an idea, so I answered quickly before Perry could say anything.</p>
-                                <blockquote>
-                                    <i class="ti-quote-left mr-2"></i>A wise girls knows her limit to touch the
+                                <blockquote> {% endcomment %}
+                                    {% comment %} <i class="ti-quote-left mr-2"></i>A wise girls knows her limit to touch the
                                     sky.Repellat sapiente neque iusto praesentium adipisci.The question gave me an idea,
                                     so I answered quickly before Perry could say anything.<i
                                         class="ti-quote-right ml-2"></i>
-                                </blockquote>
+                                </blockquote> {% endcomment %}
 
                                 
-                                <h3 class="mt-5 mb-3">Enjoying the view of summer</h3>
+                                {% comment %} <h3 class="mt-5 mb-3">Enjoying the view of summer</h3>
 
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum delectus
                                     exercitationem
                                     natus quidem enim error suscipit. Iure cupiditate nobis quaerat consectetur! Vero
                                     aliquam,
                                     amet ipsum ullam reiciendis nostrum voluptate accusantium provident ut blanditiis
-                                    incidunt. </p>
+                                    incidunt. </p> {% endcomment %}
 
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates ab ratione animi
+                                {% comment %} <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates ab ratione animi
                                     nobis in et consequatur
-                                    earum modi repellendus, qui, non debitis pariatur tempora consequuntur!</p>
+                                    earum modi repellendus, qui, non debitis pariatur tempora consequuntur!</p> {% endcomment %}
                             </div>
 
                             <div class="post-tags py-4">
@@ -307,12 +305,11 @@
                         <div class="sidebar-wrap mt-5 mt-lg-0">
                             <div class="sidebar-widget about mb-5 text-center p-3">
                                 <div class="about-author">
-                                    <img src={% static "images/author.jpg" %} alt="" class="img-fluid">
+                                    <img src={{ data.profile_picture.url }} alt="" class="img-fluid">
                                 </div>
-                                <h4 class="mb-0 mt-4">Liam Mason</h4>
+                                <h4 class="mb-0 mt-4">{{ detail.user }}</h4>
                                 <p>Travel Blogger</p>
-                                <p>I'm Liam, last year I decided to quit my job and travel the world. You can follow my
-                                    journey on this blog!</p>
+                                <p>{{ data.bio }}</p>
                                 <img src={% static "images/liammason.png" %} alt="" class="img-fluid">
                             </div>
 

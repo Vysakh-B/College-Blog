@@ -133,25 +133,25 @@
 		<div class="container-fluid">
 			<div class="row no-gutters">
 				<div class="col-lg-12 col-sm-12 col-md-12 slider-wrap">
+					{% for post in key|slice:":5" %}
 					<div class="slider-item">
 						<div class="slider-item-content">
 							<div class="post-thumb mb-4">
-								<a href={% url 'single' %}>
-									<img src={% static "images/slider/slider1.jpg" %} alt="" class="img-fluid">
+								<a href={% url 'single' post.id %}>
+									<img src={{ post.blog_picture.url }} alt="" class="img-fluid" style="object-fit: cover;object-position: center;">
 								</a>
 							</div>
 
 							<div class="slider-post-content">
 								<span
 									class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Lifestyle</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>Tips for Taking a Long-term
-										Trip</a></h3>
-								<span class=" text-muted  text-capitalize">January 2, 2019</span>
+								<h3 class="post-title mt-1"><a href={% url 'single' post.id %}>{{ post.title }}</a></h3>
+								<span class=" text-muted  text-capitalize">{{ post.created_at }}</span>
 							</div>
 						</div>
 					</div>
-
-					<div class="slider-item">
+                    {% endfor %}
+					{% comment %} <div class="slider-item">
 						<div class="slider-item-content">
 							<div class="post-thumb mb-4">
 								<a href={% url 'single' %}>
@@ -165,9 +165,9 @@
 								<span class=" text-muted  text-capitalize">September 15, 2019</span>
 							</div>
 						</div>
-					</div>
+					</div> {% endcomment %}
 
-					<div class="slider-item">
+					{% comment %} <div class="slider-item">
 						<div class="slider-item-content">
 							<div class="post-thumb mb-4">
 								<a href={% url 'single' %}>
@@ -182,9 +182,9 @@
 								<span class=" text-muted  text-capitalize">June 12, 2019</span>
 							</div>
 						</div>
-					</div>
+					</div> {% endcomment %}
 
-					<div class="slider-item">
+					{% comment %} <div class="slider-item">
 						<div class="slider-item-content">
 							<div class="post-thumb mb-4">
 								<a href={% url 'single' %}>
@@ -199,9 +199,9 @@
 								<span class=" text-muted  text-capitalize">September 15, 2019</span>
 							</div>
 						</div>
-					</div>
+					</div> {% endcomment %}
 
-					<div class="slider-item">
+					{% comment %} <div class="slider-item">
 						<div class="slider-item-content">
 							<div class="post-thumb mb-4">
 								<a href={% url 'single' %}>
@@ -216,7 +216,7 @@
 								<span class=" text-muted  text-capitalize">September 15, 2019</span>
 							</div>
 						</div>
-					</div>
+					</div> {% endcomment %}
 				</div>
 			</div>
 		</div>
@@ -227,10 +227,11 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="row">
+						{% for item in key %}
 						<div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f1.jpg"  %} alt="" class="img-fluid w-100">
+								<a class="post-thumb mb-4 d-block" href={% url 'single' item.id %}>
+									<img src={{ item.blog_picture.url }} alt="" class="img-fluid w-100">
 								</a>
 								<span class="d-flex flex-row-reverse">
 								<li class="list-inline-item"><a href="search.html"><i class="fa-regular fa-bookmark"></i></a></li>
@@ -238,14 +239,14 @@
 							<!-- <span class="d-flex flex-row-reverse">
 								<li class="list-inline-item"><a href="search.html"><i class="fa-solid fa-bookmark"></i></a></li>
 							</span> -->
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>The best place to explore to
-										enjoy</a></h3>
+								<h3 class="post-title mt-1"><a href={% url 'single' item.id %}>{{ item.title }}</a></h3>
 
-								<span class="text-muted letter-spacing text-uppercase font-sm">June 15, 2019</span>
+								<span class="text-muted letter-spacing text-uppercase font-sm">{{ item.created_at}}</span>
 
 							</article>
 						</div>
-						<div class="col-lg-3 col-md-6">
+						{% endfor %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f2.jpg" %} alt="" class="img-fluid w-100">
@@ -262,8 +263,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">September 15, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f3.jpg"  %} alt="" class="img-fluid w-100">
@@ -280,8 +281,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">September 15, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f4.jpg" %} alt="" class="img-fluid w-100">
@@ -299,8 +300,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">March 20, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f5.jpg"  %} alt="" class="img-fluid w-100">
@@ -317,8 +318,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">September 15, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f6.jpg"  %} alt="" class="img-fluid w-100">
@@ -335,8 +336,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">July 10, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f7.jpg"  %} alt="" class="img-fluid w-100">
@@ -349,8 +350,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">September 15, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f8.jpg"  %} alt="" class="img-fluid w-100">
@@ -363,8 +364,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">March 12, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f9.jpg" %} alt="" class="img-fluid w-100">
@@ -377,8 +378,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">April 19, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f10.jpg" %} alt="" class="img-fluid w-100">
@@ -391,9 +392,9 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">February 15, 2019</span>
 
 							</article>
-						</div>
+						</div> {% endcomment %}
 
-						<div class="col-lg-3 col-md-6">
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f11.jpg" %} alt="" class="img-fluid w-100">
@@ -407,8 +408,8 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">August 15, 2019</span>
 
 							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
+						</div> {% endcomment %}
+						{% comment %} <div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
 								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
 									<img src={% static "images/news/f12.jpg" %} alt="" class="img-fluid w-100">
@@ -422,7 +423,7 @@
 								<span class="text-muted letter-spacing text-uppercase font-sm">October 2, 2019</span>
 
 							</article>
-						</div>
+						</div> {% endcomment %}
 					</div>
 				</div>
 
