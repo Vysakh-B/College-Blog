@@ -112,35 +112,35 @@
                 
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="User name" required="" autofocus="" />
-                    {% if form.username.errors %}
+                    {% comment %} {% if form.username.errors %}
                         <div class="alert alert-danger">
                             {% for error in form.username.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                 </div>
                 
                 <div class="form-group">
                     <input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
-                    {% if form.email.errors %}
+                    {% comment %} {% if form.email.errors %}
                         <div class="alert alert-danger">
                             {% for error in form.email.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                 </div>
                 
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Password" required="" />
-                    {% if form.password.errors %}
+                    {% comment %} {% if form.password.errors %}
                         <div class="alert alert-danger">
                             {% for error in form.password.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                 </div>
             
                 <div class="form-group">
@@ -151,11 +151,10 @@
                         <option value="v3">MBA</option>
                         <option value="v4">B-Tech</option>
                     </select>
-                    {% if form.department.errors %}
+                    {% if chk %}
                         <div class="alert alert-danger">
-                            {% for error in form.department.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
+                                <p>{{ data }}</p>
+                            
                         </div>
                     {% endif %}
                 </div>

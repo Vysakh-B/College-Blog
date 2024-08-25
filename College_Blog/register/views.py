@@ -25,21 +25,29 @@ def logout(request):
     
     return redirect('index')  # Change 'login' to the name of your login page URL
 def index(request):
-    return render(request,'index.html')    
+    # ch = request.user
+    # prf = Profile.objects.get(username=ch)
+    # change = prf.accepted
+    pst = post.objects.all()
+    return render(request,'index.html',{'key':pst})
+    # return render(request,'index.html')    
 
 def signin(request):
     if request.method=='POST':
         username=request.POST['username']
         pswd=request.POST['password']
-        
+        flg = False
         user=auth.authenticate(username=username,password=pswd)
         print(user)
         if user is not None:
             auth.login(request,user)
             return redirect('home')
         else:
-            messages.info(request,'invalid credentials')
-            return redirect('signin')
+            flg=True
+            data = 'invalid credentials'
+            # return redirect('signin')
+            return render (request,'signin.html',{ 'data': data,'fg':flg })
+
     return render (request,'signin.html')
 
 
@@ -57,22 +65,20 @@ def home(request):
 
     return render(request,'home.html',{'pased':change,'key':pst})
     
-
-# def account(request):
-#     # User = get_user_model()
-#     userid = request.session.get('ids')
-#     user = User.objects.get(id=userid)
-#     return render(request, 'profile.html', {'bio': user.bio,'pic':user.profile_picture})
 def register(request):
     if request.method == 'POST':
         username = request.POST['username'] 
         email = request.POST['email']
         password = request.POST['password']
-        department = request.POST['department']  
+        department = request.POST['department'] 
+        ch = False 
         if User.objects.filter(username=username).exists():
             print('email already exist!!')
-            messages.info(request,"user already exists")
-            return redirect('register')
+            err = "user already exists"
+            ch = True
+            # return redirect('register')
+            return render(request,'register.html',{'data':err,'chk':ch })
+
             
 
                     
@@ -94,7 +100,8 @@ def account(request):
     context={
         'bio':prf.bio,
         'pic':prf.profile_picture.url,
-        'name':prf.username
+        'name':prf.username,
+        'dpt' :prf.department
     }
     
     pst = post.objects.filter(user=prf)

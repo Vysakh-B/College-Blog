@@ -9,10 +9,14 @@ from django.contrib.auth import get_user_model
 def magazine(request):
     return render(request,'magazine.html') 
 def single(request,id):
-    u = request.user
-    data = Profile.objects.get(username=u)
-    pt = post.objects.get(id=id)
-    return render(request,'blog-single.html',{'detail':pt,'data':data})
+    if request.user.is_authenticated:     
+        u = request.user
+        data = Profile.objects.get(username=u)
+        pt = post.objects.get(id=id)
+        return render(request,'blog-single.html',{'detail':pt,'data':data})
+    else:
+        return redirect('/signin')
+    
 def feed(request):
     return render(request,'feed.html') 
 def create(request):
