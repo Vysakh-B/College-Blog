@@ -118,10 +118,17 @@
         <div class="container">
             <div class="row">
               <div class="col-md-12">
-                <form method="post" role="form">
+                <form method="post" role="form" enctype="multipart/form-data">
+                  {% csrf_token %}
                   {% comment %} <div class="form-group">
                     <input type="text" class="form-control" name="title" placeholder="Title"/>
                   </div> {% endcomment %}
+                  {% if ck %}
+                        <div class="alert alert-danger">
+                                <p>{{ err }}</p>
+                            
+                        </div>
+                    {% endif %}
                   <div class="form-group">
                     <label> Image </label>
                     <div class="input-group">

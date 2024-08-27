@@ -120,6 +120,19 @@
               <div class="col-md-12">
                 <form method="post" role="form" enctype="multipart/form-data">
                   {% csrf_token %}
+                  {% comment %} {% if ck %}
+                        <div class="alert alert-danger">
+                        
+                    <p>{{ err }}</p>
+                        
+                        </div>
+                  {% endif %} {% endcomment %}
+                  {% if ck %}
+                        <div class="alert alert-danger">
+                                <p>{{ err }}</p>
+                            
+                        </div>
+                    {% endif %}
                   <div class="form-group">
                     <input type="text" class="form-control" name="title" placeholder="Title" required/>
                   </div>
