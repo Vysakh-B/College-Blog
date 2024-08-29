@@ -28,7 +28,7 @@ def index(request):
     # ch = request.user
     # prf = Profile.objects.get(username=ch)
     # change = prf.accepted
-    pst = post.objects.all()
+    pst = post.objects.filter(status='Approved')
     return render(request,'index.html',{'key':pst})
     # return render(request,'index.html')    
 
@@ -61,8 +61,8 @@ def home(request):
     ch = request.user
     prf = Profile.objects.get(username=ch)
     change = prf.accepted
-    pst = post.objects.all()
-
+    # pst = post.objects.all()
+    pst = post.objects.filter(status='Approved')
     return render(request,'home.html',{'pased':change,'key':pst})
     
 def register(request):
@@ -104,11 +104,12 @@ def account(request):
         'dpt' :prf.department
     }
     
-    pst = post.objects.filter(user=prf)
+    pst = post.objects.filter(user=prf,status='Approved')
+    pending_post = post.objects.filter(user=prf,status='Pending')
     # context2={
     #     'ttl':pst.title,
     #     'cnt':pst.content,
     #     'pics':pst.blog_picture,
     #     'dates':pst.created_at
     # }
-    return render(request,'profile.html',{'context':context,'key':pst})
+    return render(request,'profile.html',{'context':context,'key':pst,'wait':pending_post})
