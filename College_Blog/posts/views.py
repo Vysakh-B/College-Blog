@@ -11,8 +11,8 @@ def magazine(request):
 def single(request,id):
     if request.user.is_authenticated:     
         u = request.user
-        data = Profile.objects.get(username=u)
         pt = post.objects.get(id=id)
+        data = Profile.objects.get(username=pt.user)
         return render(request,'blog-single.html',{'detail':pt,'data':data})
     else:
         return redirect('/signin')

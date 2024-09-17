@@ -70,7 +70,8 @@ def register(request):
         username = request.POST['username'] 
         email = request.POST['email']
         password = request.POST['password']
-        department = request.POST['department'] 
+        department = request.POST['department']
+        reg =  request.POST['register_no']
         ch = False 
         if User.objects.filter(username=username).exists():
             print('email already exist!!')
@@ -87,7 +88,9 @@ def register(request):
             user=User.objects.create_user(username = username,email=email,password=password)
             print(username)
             user.save()
-            prf = Profile.objects.create(username=username,email=email,department=department)
+            if reg == "":
+                reg="NONE"
+            prf = Profile.objects.create(username=username,email=email,department=department,register_no=reg)
             prf.save()
             return redirect('signin')
             # return render(request,'register.html')

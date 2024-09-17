@@ -17,6 +17,7 @@ class Profile(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField()
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES)
+    register_no = models.CharField(max_length=150,default="NONE")
     accepted = models.BooleanField(default=False)
     bio = models.TextField(blank=True, null=True, default="This is your bio")
     profile_picture = models.ImageField(

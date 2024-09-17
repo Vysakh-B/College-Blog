@@ -109,43 +109,22 @@
             <form class="form-signin" method="POST" action="">
                 {% csrf_token %}
                 <h2 class="form-signin-heading">User Registration</h2>
-                
+            
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="User name" required="" autofocus="" />
-                    {% comment %} {% if form.username.errors %}
-                        <div class="alert alert-danger">
-                            {% for error in form.username.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %} {% endcomment %}
-                </div>
-                
-                <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
-                    {% comment %} {% if form.email.errors %}
-                        <div class="alert alert-danger">
-                            {% for error in form.email.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %} {% endcomment %}
-                </div>
-                
-                <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Password" required="" />
-                    {% comment %} {% if form.password.errors %}
-                        <div class="alert alert-danger">
-                            {% for error in form.password.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %} {% endcomment %}
                 </div>
             
                 <div class="form-group">
-                    <label for="cars">Department:</label>
-                    <select name="department" id="cars" class="form-control">
+                    <input type="email" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
+                </div>
+            
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="" />
+                </div>
+            
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <select name="department" id="department" class="form-control" onchange="toggleRegisterNo()">
                         <option value="v1">Other</option>
                         <option value="v2">MCA</option>
                         <option value="v3">MBA</option>
@@ -153,20 +132,34 @@
                     </select>
                     {% if chk %}
                         <div class="alert alert-danger">
-                                <p>{{ data }}</p>
-                            
+                            <p>{{ data }}</p>
                         </div>
                     {% endif %}
+                </div>
+            
+                <!-- Register No field, hidden by default -->
+                <div class="form-group" id="registerNoField" style="display: none;">
+                    <input type="text" class="form-control" name="register_no" placeholder="Register No" />
                 </div>
             
                 Already Registered? <a href="{% url 'signin' %}">Signin</a><br><br>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
             </form>
             
-
-
-
-
+            <!-- JavaScript to show/hide the Register No field -->
+            <script>
+                function toggleRegisterNo() {
+                    var department = document.getElementById("department").value;
+                    var registerNoField = document.getElementById("registerNoField");
+                    
+                    if (department === "v2" || department === "v3" || department === "v4") {
+                        registerNoField.style.display = "block"; // Show Register No field
+                    } else {
+                        registerNoField.style.display = "none";  // Hide Register No field
+                    }
+                }
+            </script>
+            
 
         </div>
         </section>
