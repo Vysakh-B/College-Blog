@@ -17,8 +17,7 @@ from django.contrib.auth import get_user_model
 
 
 # Create your views here.
-def superu(request):
-    return render(request,'super.html')
+
 def logout(request):
     # Call Django's built-in logout function to clear the session and log out the user
     auth_logout(request)

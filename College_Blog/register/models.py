@@ -19,6 +19,7 @@ class Profile(models.Model):
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES)
     register_no = models.CharField(max_length=150,default="NONE")
     accepted = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     bio = models.TextField(blank=True, null=True, default="This is your bio")
     profile_picture = models.ImageField(
         upload_to='profile_pictures/',

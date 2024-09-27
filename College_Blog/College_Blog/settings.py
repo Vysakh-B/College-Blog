@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'register',
     'posts',
+    'super',
 ]
 LOGIN_URL = 'signin'
 MIDDLEWARE = [
