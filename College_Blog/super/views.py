@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 # from .forms import UserRegistrationForm
 from django.contrib import messages
 from register.models import Profile
+from posts.models import post
 # from .forms import LoginForm
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User,auth
@@ -34,4 +35,27 @@ def superu(request):
 
     return render(request,'super.html')
 def adminhome(request):
-    return render(request,'admin_home.html')
+    ch = request.user
+    prf = Profile.objects.all()
+    # change = prf.accepted
+    # pst = post.objects.all()
+    pst = post.objects.filter(status='Pending')
+    return render(request,'admin_home.html',{'key':pst})
+def accept(request,id):
+    pos = post.objects.get(id=id)
+    pos.status = 'Approved'
+    pos.save()
+    prf = Profile.objects.all()
+    # change = prf.accepted
+    # pst = post.objects.all()
+    pst = post.objects.filter(status='Pending')
+    return render(request,'admin_home.html',{'key':pst})
+def userpending(request):
+    profiles = Profile.objects.filter(accepted=False)
+    return render(request,'user_pending.html',{'set':profiles})
+def acceptuser(request,id):
+    appr = Profile.objects.get(id=id)
+    appr.accepted=True
+    appr.save()
+    profiles = Profile.objects.filter(accepted=False)
+    return render(request,'user_pending.html',{'set':profiles})

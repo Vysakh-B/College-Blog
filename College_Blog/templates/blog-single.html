@@ -62,8 +62,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul id="menu" class="menu navbar-nav ">
+                        {% if  check.is_admin %}
+                        <li class="nav-item"><a href={% url 'adminhome' %} class="nav-link">Home</a></li>
+                        {% endif %}
+                        {% if  not check.is_admin %}
                         <li class="nav-item"><a href={% url 'home' %} class="nav-link">Home</a></li>
-
+                        {% endif %}
                         <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -142,14 +146,14 @@
                                 <p>{{ detail.content }}</p>
                                
                             </div>
-
+                            {% if check.is_admin %}
                             <div class="post-tags py-4">
-                                <a href="#">#Health</a>
-                                <a href="#">#Game</a>
-                                <a href="#">#Tour</a>
+                                {% comment %} #Health {% endcomment %}
+                                <a href={% url 'accept' detail.id %} ><button type='button' class='btn btn-success'>Accept</button></a>
+                                <a href="#"><button type="button" class="btn btn-danger">Reject</button></a>
                             </div>
-
-
+                            {% endif %}
+                            {% if not check.is_admin %}
                             <div
                                 class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
 
@@ -166,10 +170,11 @@
                                     
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
 
-                    
+                    {% if not check.is_admin %}
                     <div class="related-posts-block mt-5">
                         <h3 class="news-title mb-4 text-center">
                             You May Also Like
@@ -213,7 +218,8 @@
                             </div>
                         </div>
                     </div>
-
+                    {% endif %}
+                    {% if not check.is_admin %}
                     <div class="comment-area my-5">
                         <h3 class="mb-4 text-center">2 Comments</h3>
                         <div class="comment-area-box media">
@@ -252,7 +258,8 @@
                             </div>
                         </div>
                     </div>
-
+                    {% endif %}
+                    {% if not check.is_admin %}
                     <form class="comment-form mb-5 gray-bg p-5" id="comment-form">
                         <h3 class="mb-4 text-center">Leave a comment</h3>
                         <div class="row">
@@ -275,7 +282,7 @@
                         <input class="btn btn-primary" type="submit" name="submit-contact" id="submit_contact"
                             value="Submit Message">
                     </form>
-
+                    {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                     <div class="sidebar sidebar-right">
@@ -336,7 +343,7 @@
                             </div>
 
 
-                            <div class="sidebar-widget category mb-5">
+                            {% comment %} <div class="sidebar-widget category mb-5">
                                 <h4 class="text-center widget-title">Catgeories</h4>
                                 <ul class="list-unstyled">
                                     <li class="align-items-center d-flex justify-content-between">
@@ -356,7 +363,7 @@
                                         <span>5</span>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> {% endcomment %}
 
                             
                         </div>

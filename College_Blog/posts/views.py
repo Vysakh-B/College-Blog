@@ -13,7 +13,8 @@ def single(request,id):
         u = request.user
         pt = post.objects.get(id=id)
         data = Profile.objects.get(username=pt.user)
-        return render(request,'blog-single.html',{'detail':pt,'data':data})
+        chk = Profile.objects.get(username=u)
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,})
     else:
         return redirect('/signin')
     
