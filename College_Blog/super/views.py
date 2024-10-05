@@ -39,8 +39,15 @@ def adminhome(request):
     prf = Profile.objects.all()
     # change = prf.accepted
     # pst = post.objects.all()
-    pst = post.objects.filter(status='Pending')
+    pst = post.objects.filter(status='Approved')
     return render(request,'admin_home.html',{'key':pst})
+def pending(request):
+    ch = request.user
+    prf = Profile.objects.all()
+    # change = prf.accepted
+    # pst = post.objects.all()
+    pst = post.objects.filter(status='Pending')
+    return render(request,'pending_post.html',{'key':pst})
 def accept(request,id):
     pos = post.objects.get(id=id)
     pos.status = 'Approved'
@@ -50,6 +57,17 @@ def accept(request,id):
     # pst = post.objects.all()
     pst = post.objects.filter(status='Pending')
     return render(request,'admin_home.html',{'key':pst})
+def reject(request,id):
+    if request.method == 'POST': 
+        cmnt =  request.POST['reason'] 
+        pos = post.objects.get(id=id)
+        pos.admin_comment = cmnt
+        pos.save()
+        prf = Profile.objects.all()
+        # change = prf.accepted
+        # pst = post.objects.all()
+        pst = post.objects.filter(status='Pending')
+        return render(request,'admin_home.html',{'key':pst})
 def userpending(request):
     profiles = Profile.objects.filter(accepted=False)
     return render(request,'user_pending.html',{'set':profiles})
