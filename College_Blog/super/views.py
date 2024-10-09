@@ -6,7 +6,8 @@ from posts.models import post
 # from .forms import LoginForm
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User,auth
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def superu(request):
@@ -57,17 +58,36 @@ def accept(request,id):
     # pst = post.objects.all()
     pst = post.objects.filter(status='Pending')
     return render(request,'admin_home.html',{'key':pst})
-def reject(request,id):
-    if request.method == 'POST': 
-        cmnt =  request.POST['reason'] 
-        pos = post.objects.get(id=id)
-        pos.admin_comment = cmnt
-        pos.save()
-        prf = Profile.objects.all()
-        # change = prf.accepted
-        # pst = post.objects.all()
-        pst = post.objects.filter(status='Pending')
-        return render(request,'admin_home.html',{'key':pst})
+def reject(request,post_id):
+    # if request.method == 'POST': 
+    #     cmnt =  request.POST['reason'] 
+    #     pos = post.objects.get(id=id)
+    #     pos.admin_comment = cmnt
+    #     pos.save()
+    #     prf = Profile.objects.all()
+    #     # change = prf.accepted
+    #     # pst = post.objects.all()
+    #     pst = post.objects.filter(status='Pending')
+    #     return render(request,'admin_home.html',{'key':pst})
+    # data = request.GET.get('data', '')  # Get the 'data' parameter from the URL
+    if request.method == 'POST':
+        pst = post.objects.get(id=post_id)
+        rejection_reason = request.POST.get('reject_reason')
+        
+        if rejection_reason:
+            # Save the rejection reason in the post model (assuming you have a field for it)
+            pst.admin_comment = rejection_reason
+            pst.status = 'Rejected'  # Optional: Update the post's status to 'Rejected'
+            pst.save()
+
+            # Optionally, show a success message
+            # messages.success(request, 'The post has been rejected successfully.')
+
+            psts = post.objects.filter(status='Approved')
+            return render(request,'admin_home.html',{'key':psts}) # Redirect back to the blog view page
+
+    psts = post.objects.filter(status='Approved')
+    return render(request,'admin_home.html',{'key':psts})
 def userpending(request):
     profiles = Profile.objects.filter(accepted=False)
     return render(request,'user_pending.html',{'set':profiles})

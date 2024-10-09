@@ -15,6 +15,16 @@ def single(request,id):
         data = Profile.objects.get(username=pt.user)
         chk = Profile.objects.get(username=u)
         return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,})
+        if request.method == 'POST': 
+            cmnt =  request.POST['comment'] 
+            pos = post.objects.get(id=id)
+            pos.admin_comment = cmnt
+            pos.save()
+            prf = Profile.objects.all()
+            # change = prf.accepted
+            # pst = post.objects.all()
+            pst = post.objects.filter(status='Approved')
+            return render(request,'admin_home.html',{'key':pst})
     else:
         return redirect('/signin')
     
