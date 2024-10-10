@@ -6,8 +6,7 @@ from register.models import Profile
 from django.contrib.auth import get_user_model
 
 # Create your views here.
-def magazine(request):
-    return render(request,'magazine.html') 
+
 def single(request,id):
     if request.user.is_authenticated:     
         u = request.user

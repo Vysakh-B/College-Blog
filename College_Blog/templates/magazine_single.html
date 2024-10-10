@@ -43,8 +43,14 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 text-center">
-                    <a class="navbar-brand" {% url 'index' %}><img src="images/logo.png" alt=""
+                    {% if request.user %}
+                    <a class="navbar-brand" {% url 'home' %}><img src="images/logo.png" alt=""
                             class="img-fluid w-100"></a>
+                    {% else %}
+                    <a class="navbar-brand" {% url 'index' %}><img src="images/logo.png" alt=""
+                        class="img-fluid w-100"></a>
+                    {% endif %}
+                  
                 </div>
             </div>
         </div>
@@ -53,21 +59,28 @@
     <header class="header-top bg-grey justify-content-center">
         <nav class="navbar navbar-expand-lg navigation">
             <div class="container">
-                <a class="navbar-brand d-lg-none" {% url 'index' %}><img src={% static "images/logo.png" %} alt=""
+                {% if request.user %}
+                <a class="navbar-brand d-lg-none" {% url 'home' %}><img src={% static "images/logo.png" %} alt=""
                         class="img-fluid"></a>
-
+                {% endif %}
+                <a class="navbar-brand d-lg-none" {% url 'index' %}><img src={% static "images/logo.png" %} alt=""
+                    class="img-fluid"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="ti-menu"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul id="menu" class="menu navbar-nav ">
-                        {% if  check.is_admin %}
-                        <li class="nav-item"><a href={% url 'adminhome' %} class="nav-link">Home</a></li>
-                        {% endif %}
-                        {% if  not check.is_admin %}
+                        
+                        
+                        {% if not request.user %}
                         <li class="nav-item"><a href={% url 'home' %} class="nav-link">Home</a></li>
+                        {% else %}
+                        <li class="nav-item"><a href={% url 'index' %} class="nav-link">Home</a></li>
+
                         {% endif %}
+                        
+                        
                         <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -146,133 +159,13 @@
                                 <p>{{ detail.content }}</p>
                                
                             </div>
-                            {% if check.is_admin %}
-                            {% if detail.status == "Approved" %}
-                            <div class="post-tags py-4">
-                                {% comment %} #Health {% endcomment %}
-                                {% comment %} <a href={% url 'accept' detail.id %} ><button type='button' class='btn btn-success'>Accept</button></a> {% endcomment %}
-                                <a href={% url 'magazines' detail.id %}><button type="button" class="btn btn-success">Magazine</button></a>
-                            </div>
-                            {% endif %}
-                            {% if detail.status == "Pending" %}
-                            <div class="post-tags py-4">
-                                {% comment %} #Health {% endcomment %}
-                                <a href={% url 'accept' detail.id %} ><button type='button' class='btn btn-success'>Accept</button></a>
-                                <button type="button" id="rejectButton" class="btn btn-danger">Reject</button>
-                            </div>
-                            {% endif %}
-                            {% comment %} <div class="post-tags py-4"> {% endcomment %}
-                                {% comment %} #Health {% endcomment %}
-                                {% comment %} <a href={% url 'accept' detail.id %} ><button type='button' class='btn btn-success'>Accept</button></a> {% endcomment %}
-                                {% comment %} <a href="#"><button type="button" class="btn btn-danger">Reject</button></a> {% endcomment %}
-                            {% comment %} </div> {% endcomment %}
-                            {% endif %}
-                            {% if not check.is_admin %}
-                            <div
-                                class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
-
-                                <span class="single-comment-o"><i class="fa fa-comment-o"></i>0 comment</span>
-
-                                <div class="post-share">
-                                    <span class="count-number-like">2</span>
-                                    <a class="penci-post-like single-like-button"><i class="ti-heart"></i></a>
-                                </div>
-
-                                <div class="list-posts-share">
-                                    
-                                    <a target="_blank" rel="nofollow" href="#"><i class="ti-heart"></i></a>
-                                    
-                                </div>
-                            </div>
-                            {% endif %}
+                            
+                            
                         </div>
                     </div>
 
-                    {% if not check.is_admin %}
-                    <div class="related-posts-block mt-5">
-                        <h3 class="news-title mb-4 text-center">
-                            You May Also Like
-                        </h3>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="post-block-wrapper mb-4 mb-lg-0">
-                                    <a href="blog-single.html">
-                                        <img class="img-fluid" src={% static "images/fashion/img-1.jpg" %} alt="post-thumbnail" />
-                                    </a>
-                                    <div class="post-content mt-3">
-                                        <h5>
-                                            <a href="blog-single.html">Intel’s new smart glasses actually look good</a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="post-block-wrapper mb-4 mb-lg-0">
-                                    <a href="blog-single.html">
-                                        <img class="img-fluid" src={% static "images/fashion/img-2.jpg" %} alt="post-thumbnail" />
-                                    </a>
-                                    <div class="post-content mt-3">
-                                        <h5>
-                                            <a href="blog-single.html">Free Two-Hour Delivery From Whole Foods</a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="post-block-wrapper">
-                                    <a href="blog-single.html">
-                                        <img class="img-fluid" src={% static "images/fashion/img-3.jpg" %} alt="post-thumbnail" />
-                                    </a>
-                                    <div class="post-content mt-3">
-                                        <h5>
-                                            <a href="blog-single.html">Snow and Freezing Rain in Paris Forces the</a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if not check.is_admin %}
-                    <div class="comment-area my-5">
-                        <h3 class="mb-4 text-center">2 Comments</h3>
-                        <div class="comment-area-box media">
-                            <img alt="" src="images/blog-user-2.jpg" class="img-fluid float-left mr-3 mt-2">
-
-                            <div class="media-body ml-4">
-                                <h4 class="mb-0">Micle harison </h4>
-                                <span class="date-comm font-sm text-capitalize text-color"><i
-                                        class="ti-time mr-2"></i>June 7, 2019 </span>
-
-                                <div class="comment-content mt-3">
-                                    <p>Lorem ipsum dolor sit amet, usu ut perfecto postulant deterruisset, libris causae
-                                        volutpat at est, ius id modus laoreet urbanitas. Mel ei delenit dolores.</p>
-                                </div>
-                                <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
-                                    <a href="#" class="text-underline ">Reply</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-area-box media mt-5">
-                            <img alt="" src="images/blog-user-3.jpg" class="mt-2 img-fluid float-left mr-3">
-
-                            <div class="media-body ml-4">
-                                <h4 class="mb-0 ">John Doe </h4>
-                                <span class="date-comm font-sm text-capitalize text-color"><i
-                                        class="ti-time mr-2"></i>June 7, 2019 </span>
-
-                                <div class="comment-content mt-3">
-                                    <p>Some consultants are employed indirectly by the client via a consultancy staffing
-                                        company. </p>
-                                </div>
-                                <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
-                                    <a href="#" class="text-underline">Reply</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
+                    
+                    
                     {% if not check.is_admin %}
                     <form class="comment-form mb-5 gray-bg p-5" id="comment-form">
                         <h3 class="mb-4 text-center">Leave a comment</h3>
@@ -298,89 +191,7 @@
                     </form>
                     {% endif %}
                     <!-- The Modal (initially hidden) -->
-<div id="commentModal" class="modal" style="display:none;">
-    <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      
-      <!-- Comment Form -->
-      <form class="comment-form mb-5 gray-bg p-5" id="comment-form" method='POST' action="{% url 'reject' detail.id %}">
-        {% csrf_token %}
-        <h3 class="mb-4 text-center">Reason to Reject</h3>
-        <div class="row">
-          <div class="col-lg-12">
-            <textarea class="form-control mb-3" name="reject_reason" id="rejectComment" cols="30" rows="5" placeholder="Reason"></textarea>
-            <input type="hidden" name="post_id" value="{{ detail.id }}">
-          </div>
-          
-        </div>
-  
-        <!-- Submit and Cancel buttons -->
-        {% comment %} <input class="btn btn-primary" type="submit" name="submit-comment" id="submit_comment" value="Submit"></input> {% endcomment %}
-        <a href={% url 'reject' detail.id %}><button type="submit" class="btn btn-secondary" id="submit_comment" onclick="submitReject()">Submit</button></a>
-        <button type="button" class="btn btn-secondary" id="cancelModal">Cancel</button>
-      </form>
-    </div>
-  </div>
-  
-  <!-- Some basic CSS to style the modal -->
-  <style>
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 500px; 
-    margin: auto; 
-}
-  
-  textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .close {
-    float: right;
-    cursor: pointer;
-  }
-  </style>
-  <script>
-    
-    // Show the form modal when "Reject" button is clicked
-    document.getElementById('rejectButton').onclick = function() {
-        document.getElementById('commentModal').style.display = 'block';
-    }
-    
-    // Hide the form modal when "Cancel" button is clicked
-    document.getElementById('cancelModal').onclick = function() {
-        document.getElementById('commentModal').style.display = 'none';
-    }
-    
-    // Hide the modal when clicking the close (X) button
-    document.getElementById('closeModal').onclick = function() {
-        document.getElementById('commentModal').style.display = 'none';
-    }
-    
-    // Optionally, hide the modal when clicking outside the modal content
-    window.onclick = function(event) {
-        if (event.target === document.getElementById('commentModal')) {
-            document.getElementById('commentModal').style.display = 'none';
-        }
-    }
-    // Function to submit the rejection comment and post ID
-    
-    </script>
+
       
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
