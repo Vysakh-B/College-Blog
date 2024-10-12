@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from . models import post
+from . models import post,Comment
 from django.contrib.auth.models import User
 from register.models import Profile
 
@@ -13,7 +13,15 @@ def single(request,id):
         pt = post.objects.get(id=id)
         data = Profile.objects.get(username=pt.user)
         chk = Profile.objects.get(username=u)
-        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,})
+        related = post.objects.filter(user=pt.user,status="Approved").exclude(id=pt.id)[:3]
+        # cmnts = Comment.objects.filter(post_id=id).select_related('user_id__profile').order_by('commented_at')[:3]
+        cmnts = Comment.objects.filter(post_id=id).select_related('user_id').order_by('-commented_at')[:2]
+
+        # context = {
+        # 'comments': cmnts,
+        # 'post': pt,  # Example: the post itself
+        #             }
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts})
         if request.method == 'POST': 
             cmnt =  request.POST['comment'] 
             pos = post.objects.get(id=id)
@@ -95,3 +103,38 @@ def edit(request):
         return redirect('home')
     # return render(request,'create.html') 
     return render(request,'edit.html')
+def addcomment(request,post_id):
+    u=request.user
+    err = ""
+    tg=False
+    if request.method == 'POST':
+        u=request.user
+        err = ""
+        tg=False
+        prf = post.objects.get(id=post_id)
+        prf_id = Profile.objects.get(username=u)
+        comment = request.POST.get('comment')
+    
+        if comment == "":
+            tg=True
+            err = "Comment must not be blank"
+            # Save the rejection reason in the post model (assuming you have a field for it)
+            pt = post.objects.get(id=post_id)
+            data = Profile.objects.get(username=pt.user)
+            chk = Profile.objects.get(username=u)
+            return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'er':err,'tg':tg})
+            # return render(request,'blog-single.html',{'key':psts}) # Redirect back to the blog view page
+        Comment.objects.create(post_id=prf,user_id=prf_id,comment_description=comment)
+        tg=False
+        err = "Commented Succesfully"
+        # Save the rejection reason in the post model (assuming you have a field for it)
+        pt = post.objects.get(id=post_id)
+        data = Profile.objects.get(username=pt.user)
+        chk = Profile.objects.get(username=u)
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'er':err,'tg':tg})
+        # pst.status = 'Rejected'  # Optional: Update the post's status to 'Rejected'
+        # cmt.save()
+    pt = post.objects.get(id=post_id)
+    data = Profile.objects.get(username=pt.user)
+    chk = Profile.objects.get(username=u)
+    return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,})

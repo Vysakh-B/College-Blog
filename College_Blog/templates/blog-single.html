@@ -122,7 +122,18 @@
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <div class="single-post">
+                        
                         <div class="post-header mb-5 text-center">
+                            {% if tg %}
+                    <div class="alert alert-danger">              
+                            <p>{{ er }}</p>                       
+                    </div>
+                        {% endif %}
+                        {% if not tg and er %}
+                    <div class="alert alert-success">              
+                            <p>{{ er }}</p>                       
+                    </div>
+                        {% endif %}
                             <div class="meta-cat">
                                 <a class="post-category font-extra text-color text-uppercase font-sm letter-spacing-1"
                                     href="#">Health ,</a>
@@ -194,107 +205,81 @@
                             You May Also Like
                         </h3>
                         <div class="row">
+                            {% for u in related %}
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="post-block-wrapper mb-4 mb-lg-0">
-                                    <a href="blog-single.html">
-                                        <img class="img-fluid" src={% static "images/fashion/img-1.jpg" %} alt="post-thumbnail" />
+                                    <a href={% url 'single' u.id %}>
+                                        <img class="img-fluid" src={{ u.blog_picture.url }} alt="post-thumbnail" />
                                     </a>
                                     <div class="post-content mt-3">
                                         <h5>
-                                            <a href="blog-single.html">Intel’s new smart glasses actually look good</a>
+                                            <a href={% url 'single' u.id %}>{{ u.title }}</a>
                                         </h5>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="post-block-wrapper mb-4 mb-lg-0">
-                                    <a href="blog-single.html">
-                                        <img class="img-fluid" src={% static "images/fashion/img-2.jpg" %} alt="post-thumbnail" />
-                                    </a>
-                                    <div class="post-content mt-3">
-                                        <h5>
-                                            <a href="blog-single.html">Free Two-Hour Delivery From Whole Foods</a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="post-block-wrapper">
-                                    <a href="blog-single.html">
-                                        <img class="img-fluid" src={% static "images/fashion/img-3.jpg" %} alt="post-thumbnail" />
-                                    </a>
-                                    <div class="post-content mt-3">
-                                        <h5>
-                                            <a href="blog-single.html">Snow and Freezing Rain in Paris Forces the</a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     {% endif %}
                     {% if not check.is_admin %}
                     <div class="comment-area my-5">
                         <h3 class="mb-4 text-center">2 Comments</h3>
+                        {% for c in cmntss %}
                         <div class="comment-area-box media">
-                            <img alt="" src="images/blog-user-2.jpg" class="img-fluid float-left mr-3 mt-2">
-
+                            {% comment %} <img alt="" src={{ c.user_id.profile_picture.url }} class="img-fluid float-left mr-3 mt-2"> {% endcomment %}
+                            <div class="author-img">
+                                <img alt="" src={{ c.user_id.profile_picture.url }} class="avatar avatar-100 photo" width="100"
+                                    height="100">
+                            </div>
+                            <style>
+                                .author-img {
+                                    width: 100px;               
+                                    height: 100px;              
+                                    border-radius: 50%;         
+                                    overflow: hidden;           
+                                    display: flex;              
+                                    justify-content: center;    
+                                    align-items: center;        
+                                }
+                        
+                                .author-img img {
+                                    width: 100%;              
+                                    height: 100%;               
+                                    object-fit: cover;          
+                                    border-radius: 50%;        
+                                }
+                            </style>
                             <div class="media-body ml-4">
-                                <h4 class="mb-0">Micle harison </h4>
+                                <h4 class="mb-0">{{ c.user_id }}</h4>
                                 <span class="date-comm font-sm text-capitalize text-color"><i
-                                        class="ti-time mr-2"></i>June 7, 2019 </span>
+                                        class="ti-time mr-2"></i>{{ c.commented_at }} </span>
 
                                 <div class="comment-content mt-3">
-                                    <p>Lorem ipsum dolor sit amet, usu ut perfecto postulant deterruisset, libris causae
-                                        volutpat at est, ius id modus laoreet urbanitas. Mel ei delenit dolores.</p>
+                                    <p>{{ c.comment_description }}</p>
                                 </div>
                                 <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
-                                    <a href="#" class="text-underline ">Reply</a>
+                                    <a href="#" class="text-underline ">Report</a>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="comment-area-box media mt-5">
-                            <img alt="" src="images/blog-user-3.jpg" class="mt-2 img-fluid float-left mr-3">
-
-                            <div class="media-body ml-4">
-                                <h4 class="mb-0 ">John Doe </h4>
-                                <span class="date-comm font-sm text-capitalize text-color"><i
-                                        class="ti-time mr-2"></i>June 7, 2019 </span>
-
-                                <div class="comment-content mt-3">
-                                    <p>Some consultants are employed indirectly by the client via a consultancy staffing
-                                        company. </p>
-                                </div>
-                                <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
-                                    <a href="#" class="text-underline">Reply</a>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     {% endif %}
                     {% if not check.is_admin %}
-                    <form class="comment-form mb-5 gray-bg p-5" id="comment-form">
+                    <form class="comment-form mb-5 gray-bg p-5" id="comment-form" method="POST" action="{% url 'addcomment' detail.id %}">
+                        {% csrf_token %}
                         <h3 class="mb-4 text-center">Leave a comment</h3>
                         <div class="row">
                             <div class="col-lg-12">
                                 <textarea class="form-control mb-3" name="comment" id="comment" cols="30" rows="5"
                                     placeholder="Comment"></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="name" id="name" placeholder="Name:">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="mail" id="mail" placeholder="Email:">
-                                </div>
+                                    <input type="hidden" name="post_id" value="{{ detail.id }}">
                             </div>
                         </div>
 
-                        <input class="btn btn-primary" type="submit" name="submit-contact" id="submit_contact"
-                            value="Submit Message">
+                        <a href={% url 'addcomment' detail.id %}><input class="btn btn-primary" type="submit" name="submit-contact" id="submit_contact"
+                            value="Submit Comment"></a>
                     </form>
                     {% endif %}
                     <!-- The Modal (initially hidden) -->
