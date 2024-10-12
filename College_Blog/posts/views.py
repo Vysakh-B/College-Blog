@@ -36,7 +36,13 @@ def single(request,id):
         return redirect('/signin')
     
 def feed(request):
-    return render(request,'feed.html') 
+    ch = request.user
+    prf = Profile.objects.get(username=ch)
+    change = prf.accepted
+    # pst = post.objects.all()
+    pst = post.objects.filter(status='Approved')
+    return render(request,'feed.html',{'pased':change,'key':pst})
+    
 def create(request):
     if request.method == 'POST':
         # user = User.objects.get(id=request.session.get('ids'))
@@ -131,10 +137,49 @@ def addcomment(request,post_id):
         pt = post.objects.get(id=post_id)
         data = Profile.objects.get(username=pt.user)
         chk = Profile.objects.get(username=u)
-        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'er':err,'tg':tg})
+        related = post.objects.filter(user=pt.user,status="Approved").exclude(id=pt.id)[:3]
+        # cmnts = Comment.objects.filter(post_id=id).select_related('user_id__profile').order_by('commented_at')[:3]
+        cmnts = Comment.objects.filter(post_id=post_id).select_related('user_id').order_by('-commented_at')[:2]
+
+        # context = {
+        # 'comments': cmnts,
+        # 'post': pt,  # Example: the post itself
+        #             }
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts})
         # pst.status = 'Rejected'  # Optional: Update the post's status to 'Rejected'
         # cmt.save()
     pt = post.objects.get(id=post_id)
     data = Profile.objects.get(username=pt.user)
     chk = Profile.objects.get(username=u)
-    return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,})
+    related = post.objects.filter(user=pt.user,status="Approved").exclude(id=pt.id)[:3]
+    # cmnts = Comment.objects.filter(post_id=id).select_related('user_id__profile').order_by('commented_at')[:3]
+    cmnts = Comment.objects.filter(post_id=post_id).select_related('user_id').order_by('-commented_at')[:2]
+
+    # context = {
+    # 'comments': cmnts,
+    # 'post': pt,  # Example: the post itself
+    #             }
+    return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts})
+def addreport(request,c_id,p_id):
+    u=request.user
+    # err = ""
+    # tg=False
+    cmtn = Comment.objects.get(id=c_id)
+    cmtn.report_count = cmtn.report_count + 1
+    cmtn.save()
+    err = "Reported Succesfully"
+    # Save the rejection reason in the post model (assuming you have a field for it)
+    pt = post.objects.get(id=p_id)
+    data = Profile.objects.get(username=pt.user)
+    chk = Profile.objects.get(username=u)
+    # return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'er':err,'tg':tg})
+    
+    related = post.objects.filter(user=pt.user,status="Approved").exclude(id=pt.id)[:3]
+    # cmnts = Comment.objects.filter(post_id=id).select_related('user_id__profile').order_by('commented_at')[:3]
+    cmnts = Comment.objects.filter(post_id=p_id).select_related('user_id').order_by('-commented_at')[:2]
+
+    # context = {
+    # 'comments': cmnts,
+    # 'post': pt,  # Example: the post itself
+    #             }
+    return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts})

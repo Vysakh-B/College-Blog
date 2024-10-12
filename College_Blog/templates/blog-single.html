@@ -259,7 +259,7 @@
                                     <p>{{ c.comment_description }}</p>
                                 </div>
                                 <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
-                                    <a href="#" class="text-underline ">Report</a>
+                                    <a href={% url 'addreport' c.id detail.id %} class="text-underline ">Report</a>
                                 </div>
                             </div>
                         </div>
