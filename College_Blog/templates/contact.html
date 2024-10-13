@@ -51,22 +51,30 @@
     <header class="header-top bg-grey justify-content-center">
         <nav class="navbar navbar-expand-lg navigation">
             <div class="container">
-                <a class="navbar-brand d-lg-none" href={% url 'index' %}><img src="images/logo.png" alt=""
+                {% if request.user %}
+                <a class="navbar-brand d-lg-none" href={% url 'home' %}><img src="images/logo.png" alt=""
                         class="img-fluid"></a>
-
+                        {% else %}
+                        <a class="navbar-brand d-lg-none" href={% url 'index' %}><img src="images/logo.png" alt=""
+                            class="img-fluid"></a>
+                {% endif %}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="ti-menu"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul id="menu" class="menu navbar-nav ">
+                        {% if request.user %}
                         <li class="nav-item"><a href={% url 'home' %} class="nav-link">Home</a></li>
-                        
+                        {% else %}
+                        <li class="nav-item"><a href={% url 'index' %} class="nav-link">Home</a></li>
+
+                        {% endif %}
 
                         <li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
                         {% comment %} <li class="nav-item"><a href={% url 'home' %} class="nav-link">Category</a></li> {% endcomment %}
                         
-                        <li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li>
+                        {% comment %} <li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li> {% endcomment %}
                         <li class="nav-item d-lg-none">
                             <div class="search_toggle p-3 d-inline-block bg-white"><i class="ti-search"></i></div>
                         </li>

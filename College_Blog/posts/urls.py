@@ -8,6 +8,7 @@ urlpatterns = [
     path('search',views.search,name='search'),   
     path('edit',views.edit,name='edit'),
     path('addcomment/<int:post_id>/',views.addcomment,name='addcomment'),
+    path('editpost/<int:post_id>/',views.editpost,name='editpost'),
     path('addreport/<int:c_id>/<int:p_id>/',views.addreport,name='addreport'),
 
 

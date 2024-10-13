@@ -108,10 +108,12 @@ def account(request):
     
     pst = post.objects.filter(user=prf,status='Approved')
     pending_post = post.objects.filter(user=prf,status='Pending')
+    rejected_post = post.objects.filter(user=prf,status='Rejected')
+
     # context2={
     #     'ttl':pst.title,
     #     'cnt':pst.content,
     #     'pics':pst.blog_picture,
     #     'dates':pst.created_at
     # }
-    return render(request,'profile.html',{'context':context,'key':pst,'wait':pending_post})
+    return render(request,'profile.html',{'context':context,'key':pst,'wait':pending_post,'reject':rejected_post})
