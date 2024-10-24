@@ -106,9 +106,9 @@ def account(request):
         'dpt' :prf.department
     }
     
-    pst = post.objects.filter(user=prf,status='Approved')
+    pst = post.objects.filter(user=prf,status='Approved',showing=True)
     pending_post = post.objects.filter(user=prf,status='Pending')
-    rejected_post = post.objects.filter(user=prf,status='Rejected')
+    rejected_post = post.objects.filter(user=prf,status='Rejected',showing=True)
 
     # context2={
     #     'ttl':pst.title,

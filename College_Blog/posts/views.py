@@ -221,3 +221,54 @@ def addreport(request,c_id,p_id):
     # 'post': pt,  # Example: the post itself
     #             }
     return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts})
+def removepost(request,post_id):
+    try:
+        rpst = post.objects.get(id=post_id)  # Use get() to get a single object
+        rpst.showing = False  # Modify the attribute of the single object
+        rpst.save()  # Save the object
+    except post.DoesNotExist:
+        # Handle the case where the post doesn't exist
+        return HttpResponse("Post not found.")
+    user = request.user
+    prf = Profile.objects.get(username=user)
+    # print(prf.bio)
+    context={
+        'bio':prf.bio,
+        'pic':prf.profile_picture.url,
+        'name':prf.username,
+        'dpt' :prf.department
+    }
+    
+    pst = post.objects.filter(user=prf,status='Approved',showing=True)
+    pending_post = post.objects.filter(user=prf,status='Pending')
+    rejected_post = post.objects.filter(user=prf,status='Rejected',showing=True)
+
+    # context2={
+    #     'ttl':pst.title,
+    #     'cnt':pst.content,
+    #     'pics':pst.blog_picture,
+    #     'dates':pst.created_at
+    # }
+    return render(request,'profile.html',{'context':context,'key':pst,'wait':pending_post,'reject':rejected_post})
+def singleview(request,profile_id):
+    # user = request.user
+    prf = Profile.objects.get(id=profile_id)
+    # print(prf.bio)
+    context={
+        'bio':prf.bio,
+        'pic':prf.profile_picture.url,
+        'name':prf.username,
+        'dpt' :prf.department
+    }
+    
+    pst = post.objects.filter(user=prf,status='Approved',showing=True)
+    # pending_post = post.objects.filter(user=prf,status='Pending')
+    # rejected_post = post.objects.filter(user=prf,status='Rejected',showing=True)
+
+    # context2={
+    #     'ttl':pst.title,
+    #     'cnt':pst.content,
+    #     'pics':pst.blog_picture,
+    #     'dates':pst.created_at
+    # }
+    return render(request,'profile.html',{'context':context,'key':pst})

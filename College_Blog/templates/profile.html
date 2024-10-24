@@ -161,7 +161,7 @@
     <img class="mr-4" src="{{ r.blog_picture.url }}" alt="">
     <div class="media-body">
         <span class="text-muted letter-spacing text-uppercase font-sm">{{ r.created_at }}</span>
-        <h4>{{ r.content|truncatechars:60 }}</h4>
+        <h4>{{ r.content|truncatechars:30 }}</h4>
         
         <!-- Reason displayed all the time -->
         <p class="reason-text">{{ r.admin_comment }}</p>
@@ -169,7 +169,8 @@
         <!-- Hidden buttons, displayed on hover -->
         <div class="hover-buttons">
             <a href={% url 'editpost' r.id %}><button class="btn btn-primary btn-sm edit-btn">EDIT</button></a>
-            <button class="btn btn-danger btn-sm delete-btn">DELETE</button>
+            <a href={% url 'removepost' r.id %}><button class="btn btn-danger btn-sm delete-btn">DELETE</button></a>
+
         </div>
     </div>
 </div>
@@ -225,9 +226,11 @@
                                                     <a class="post-thumb mb-4 d-block" href={% url 'single' i.id %}>
                                                         <img src={{ i.blog_picture.url }} alt="" class="img-fluid w-100">
                                                     </a>
-                                                    <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">{{ i.title }}</span>
-                                                    <h3 class="post-title mt-1"><a href={% url 'single' i.id  %}>{{ i.content|truncatechars:60}} </a></h3>
+                                                    {% comment %} <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">{{ i.title }}</span> {% endcomment %}
+                                                    <h3 class="post-title mt-1"><a href={% url 'single' i.id  %}>{{ i.title|truncatechars:30}} </a></h3>
                                                     <span class="text-muted letter-spacing text-uppercase font-sm">{{ i.created_at }}</span>
+                                                    <a href={% url 'removepost' i.id %}><button class="btn btn-danger btn-sm delete-btn">DELETE</button></a>
+
                                                 </article>
                                             </div>
                                             {% endfor %}

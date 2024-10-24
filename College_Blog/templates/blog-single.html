@@ -375,7 +375,7 @@
                                 <div class="about-author">
                                     <img src={{ data.profile_picture.url }} alt="" class="img-fluid">
                                 </div>
-                                <h4 class="mb-0 mt-4">{{ detail.user }}</h4>
+                                <a href={% url 'singleview' data.id %}><h4 class="mb-0 mt-4">{{ detail.user }}</h4></a>
                                 <p>Travel Blogger</p>
                                 <p>{{ data.bio }}</p>
                                 <img src={% static "images/liammason.png" %} alt="" class="img-fluid">

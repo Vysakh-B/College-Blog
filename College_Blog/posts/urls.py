@@ -9,6 +9,8 @@ urlpatterns = [
     path('edit',views.edit,name='edit'),
     path('addcomment/<int:post_id>/',views.addcomment,name='addcomment'),
     path('editpost/<int:post_id>/',views.editpost,name='editpost'),
+    path('singleview/<int:profile_id>',views.singleview,name='singleview'),
+    path('removepost/<int:post_id>/',views.removepost,name='removepost'),
     path('addreport/<int:c_id>/<int:p_id>/',views.addreport,name='addreport'),
 
 

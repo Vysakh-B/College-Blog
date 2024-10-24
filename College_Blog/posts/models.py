@@ -18,6 +18,7 @@ class post(models.Model):
     like = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
     admin_comment = models.TextField(blank=True, null=True)
+    showing = models.BooleanField(default=True)
     def __str__(self):
         return str(self.user)
 
