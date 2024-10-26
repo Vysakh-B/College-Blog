@@ -36,6 +36,7 @@
 	<link rel="stylesheet" href={% static "plugins/magnific-popup/magnific-popup.css"  %}>
 	<!-- manin stylesheet -->
 	<link rel="stylesheet" href={% static "css/style.css"  %}>
+	
 </head>
 
 <body>
@@ -169,11 +170,24 @@
 									<img src={{ item.blog_picture.url }} alt="" class="img-fluid w-100">
 								</a>
 								<span class="d-flex flex-row-reverse">
+									<li class="list-inline-item">
+										{% comment %} {% if item.is_bookmarked %}
+											<a href="{% url 'unbookmark' item.id %}"> {% endcomment %}
+												<i class="ti-bookmark"></i> <!-- Already Bookmarked Icon -->
+											{% comment %} </a>
+										{% else %}
+											<a href="{% url 'bookmark' item.id %}">
+												<i class="fa-regular fa-bookmark"></i> <!-- Not Bookmarked Icon -->
+											</a>
+										{% endif %} {% endcomment %}
+									</li>
+								</span>
+								{% comment %} <span class="d-flex flex-row-reverse">
 								<li class="list-inline-item"><a href="search.html"><i class="fa-regular fa-bookmark"></i></a></li>
-							</span>
-							<!-- <span class="d-flex flex-row-reverse">
+							</span> {% endcomment %}
+							{% comment %} <span class="d-flex flex-row-reverse">
 								<li class="list-inline-item"><a href="search.html"><i class="fa-solid fa-bookmark"></i></a></li>
-							</span> -->
+							</span>  {% endcomment %}
 								<h3 class="post-title mt-1"><a href={% url 'single' item.id %}>{{ item.title }}</a></h3>
 
 								<span class="text-muted letter-spacing text-uppercase font-sm">{{ item.created_at}}</span>
@@ -251,6 +265,7 @@
 	<!-- THEME JAVASCRIPT FILES
 ================================================== -->
 	<!-- initialize jQuery Library -->
+	<script src="https://kit.fontawesome.com/dcc9db0535.js" crossorigin="anonymous"></script>
 	<script src={% static "plugins/jquery/jquery.js" %}></script>
 	<!-- Bootstrap jQuery -->
 	<script src={% static "plugins/bootstrap/js/bootstrap.min.js" %}></script>
@@ -261,10 +276,10 @@
 	<script src={% static "plugins/magnific-popup/magnific-popup.js" %}></script>
 	<!-- Instagram Feed Js -->
 	{% comment %} <script src={% static "plugins/instafeed-js/instafeed.min.js" %}></script> {% endcomment %}
-	<script src={% static "https://kit.fontawesome.com/dcc9db0535.js" %} crossorigin="anonymous"></script>
+	<script src= "https://kit.fontawesome.com/dcc9db0535.js" crossorigin="anonymous"></script>
 
 	<!-- Google Map -->
-	<script src={% static "https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw" %}></script>
+	<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
 	<script src={% static "plugins/google-map/gmap.js" %}></script>
 	<!-- main js -->
 	<script src={% static "js/custom.js" %}></script>
