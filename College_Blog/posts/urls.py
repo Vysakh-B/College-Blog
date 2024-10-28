@@ -12,6 +12,10 @@ urlpatterns = [
     path('singleview/<int:profile_id>',views.singleview,name='singleview'),
     path('removepost/<int:post_id>/',views.removepost,name='removepost'),
     path('addreport/<int:c_id>/<int:p_id>/',views.addreport,name='addreport'),
+    path('bookmark/<int:id>/',views.bookmark,name='bookmark'),
+    path('booked',views.booked,name='booked'),
+    path('unbookmark/<int:id>/',views.unbookmark,name='unbookmark'),
 
+    
 
 ]

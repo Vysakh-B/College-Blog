@@ -171,15 +171,14 @@
 								</a>
 								<span class="d-flex flex-row-reverse">
 									<li class="list-inline-item">
-										{% comment %} {% if item.is_bookmarked %}
-											<a href="{% url 'unbookmark' item.id %}"> {% endcomment %}
-												<i class="ti-bookmark"></i> <!-- Already Bookmarked Icon -->
-											{% comment %} </a>
+										{% if item.id in ck %}						
+												<a href="{% url 'unbookmark' item.id %}?next=home"><i class="fas fa-bookmark"></i></a> <!-- Already Bookmarked Icon -->
+											
 										{% else %}
-											<a href="{% url 'bookmark' item.id %}">
-												<i class="fa-regular fa-bookmark"></i> <!-- Not Bookmarked Icon -->
+											<a href="{% url 'bookmark' item.id %}?next=home">
+												<i class="far fa-bookmark"></i> <!-- Not Bookmarked Icon -->
 											</a>
-										{% endif %} {% endcomment %}
+										{% endif %}
 									</li>
 								</span>
 								{% comment %} <span class="d-flex flex-row-reverse">
@@ -281,6 +280,8 @@
 	<!-- Google Map -->
 	<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
 	<script src={% static "plugins/google-map/gmap.js" %}></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8jntKnNboM6Tf4TIHUEA7QyB8o0MCN3ML7EQZ" crossorigin="anonymous">
+
 	<!-- main js -->
 	<script src={% static "js/custom.js" %}></script>
 

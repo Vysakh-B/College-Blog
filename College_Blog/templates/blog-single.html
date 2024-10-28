@@ -43,7 +43,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 text-center">
-                    <a class="navbar-brand" {% url 'index' %}><img src="images/logo.png" alt=""
+                    <a class="navbar-brand" {% url 'index' %}><img src={% static "images/logo.png" %} alt=""
                             class="img-fluid w-100"></a>
                 </div>
             </div>
@@ -376,12 +376,12 @@
                                     <img src={{ data.profile_picture.url }} alt="" class="img-fluid">
                                 </div>
                                 <a href={% url 'singleview' data.id %}><h4 class="mb-0 mt-4">{{ detail.user }}</h4></a>
-                                <p>Travel Blogger</p>
+                                <p> Blogger</p>
                                 <p>{{ data.bio }}</p>
-                                <img src={% static "images/liammason.png" %} alt="" class="img-fluid">
+                                {% comment %} <img src={% static "images/liammason.png" %} alt="" class="img-fluid"> {% endcomment %}
                             </div>
 
-                            <div class="sidebar-widget follow mb-5 text-center">
+                            {% comment %} <div class="sidebar-widget follow mb-5 text-center">
                                 <h4 class="text-center widget-title">Follow Me</h4>
                                 <div class="follow-socials">
                                     <a href="#"><i class="ti-heart"></i></a>
@@ -391,7 +391,7 @@
                                     <!-- <a href="#"><i class="ti-youtube"></i></a> -->
                                     <!-- <a href="#"><i class="ti-pinterest"></i></a> -->
                                 </div>
-                            </div>
+                            </div> {% endcomment %}
 
                             <div class="sidebar-widget mb-5 ">
                                 <h4 class="text-center widget-title">Trending Posts</h4>

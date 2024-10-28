@@ -8,7 +8,7 @@ from django.contrib.auth.models import User,auth
 # from django.contrib.auth import authenticate, login
 # from django.contrib.auth.decorators import login_required
 from . models import Profile
-from posts.models import post
+from posts.models import post,Bookmark
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
@@ -58,11 +58,16 @@ def ctct(request):
 
 def home(request):
     ch = request.user
+    bookset=[]
     prf = Profile.objects.get(username=ch)
+    Book = Bookmark.objects.filter(userid=prf.id)
+    for i in Book:
+        bookset.append(i.postid.id)
     change = prf.accepted
     # pst = post.objects.all()
     pst = post.objects.filter(status='Approved')
-    return render(request,'home.html',{'pased':change,'key':pst})
+    # print(bookset)
+    return render(request,'home.html',{'pased':change,'key':pst,'ck':bookset})
     
 def register(request):
     if request.method == 'POST':

@@ -33,3 +33,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user_id} on {self.post_id}"
+class Bookmark(models.Model):
+    id = models.AutoField(primary_key=True)
+    userid = models.ForeignKey('register.Profile', on_delete=models.CASCADE, related_name="bookmarks")
+    postid = models.ForeignKey('Post', on_delete=models.CASCADE, related_name="bookmarked_by")
+
+    class Meta:
+        unique_together = ('userid', 'postid')  # Ensures a user can't bookmark the same post multiple times
+        ordering = ['id']  # Optional: orders bookmarks by their creation id
+
+    def __str__(self):
+        return f"Bookmark by {self.userid} on {self.postid}"

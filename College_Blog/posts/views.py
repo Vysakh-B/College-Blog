@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from . models import post,Comment
+from . models import post,Comment,Bookmark
 from django.contrib.auth.models import User
 from register.models import Profile
 
@@ -250,6 +250,19 @@ def removepost(request,post_id):
     #     'dates':pst.created_at
     # }
     return render(request,'profile.html',{'context':context,'key':pst,'wait':pending_post,'reject':rejected_post})
+def booked(request):
+    us = request.user
+    
+    user_profile = Profile.objects.get(username=request.user)
+
+    # Fetch all bookmarked posts for the current user
+    bookmarked_posts = post.objects.filter(bookmarked_by__userid=user_profile)
+    bookset=[]
+    prf = Profile.objects.get(username=us)
+    Book = Bookmark.objects.filter(userid=prf.id)
+    for i in Book:
+        bookset.append(i.postid.id)
+    return render(request,'bookmarked.html',{'books':bookmarked_posts,'ck':bookset})
 def singleview(request,profile_id):
     # user = request.user
     prf = Profile.objects.get(id=profile_id)
@@ -272,3 +285,25 @@ def singleview(request,profile_id):
     #     'dates':pst.created_at
     # }
     return render(request,'profile.html',{'context':context,'key':pst})
+def bookmark(request,id):
+    if request.user.is_authenticated:
+        u = request.user
+        prfile = Profile.objects.get(username=u)
+        pst = post.objects.get(id=id)
+        mark = Bookmark.objects.create(userid=prfile,postid=pst)
+        next_page = request.GET.get('next')
+        return redirect(next_page)
+        
+    else:
+        return redirect('signin')
+    return render(request,'home.html')
+def unbookmark(request,id):
+    posts = post.objects.get(id=id)
+    u = request.user
+    next_page = request.GET.get('next')
+    prfile = Profile.objects.get(username=u)
+    bokmrk=Bookmark.objects.get(userid=prfile,postid=posts)
+    bokmrk.delete()
+    return redirect(next_page)
+    
+    return render(request,'home.html')
