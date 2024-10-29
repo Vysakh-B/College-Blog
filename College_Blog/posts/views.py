@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
+from django.http import JsonResponse
 from . models import post,Comment,Bookmark
 from django.contrib.auth.models import User
 from register.models import Profile
@@ -40,7 +41,7 @@ def feed(request):
     prf = Profile.objects.get(username=ch)
     change = prf.accepted
     # pst = post.objects.all()
-    pst = post.objects.filter(status='Approved')
+    pst = post.objects.filter(status='Approved',showing=True)
     return render(request,'feed.html',{'pased':change,'key':pst})
     
 def create(request):
@@ -286,24 +287,34 @@ def singleview(request,profile_id):
     # }
     return render(request,'profile.html',{'context':context,'key':pst})
 def bookmark(request,id):
-    if request.user.is_authenticated:
-        u = request.user
-        prfile = Profile.objects.get(username=u)
-        pst = post.objects.get(id=id)
-        mark = Bookmark.objects.create(userid=prfile,postid=pst)
-        next_page = request.GET.get('next')
-        return redirect(next_page)
+    if request.method == 'POST':
+
+        if request.user.is_authenticated:
+            profile = Profile.objects.get(username=request.user)
+            post_obj = get_object_or_404(post, id=id)
+
+            # Check if the bookmark already exists
+            bookmark, created = Bookmark.objects.get_or_create(userid=profile, postid=post_obj)
         
-    else:
-        return redirect('signin')
-    return render(request,'home.html')
-def unbookmark(request,id):
-    posts = post.objects.get(id=id)
-    u = request.user
-    next_page = request.GET.get('next')
-    prfile = Profile.objects.get(username=u)
-    bokmrk=Bookmark.objects.get(userid=prfile,postid=posts)
-    bokmrk.delete()
-    return redirect(next_page)
+            if created:
+                # If a new bookmark was created
+                return JsonResponse({'status': 'added', 'message': 'Bookmark added successfully.'})
+            else:
+                # If the bookmark already exists, delete it to unbookmark
+                bookmark.delete()
+                return JsonResponse({'status': 'removed', 'message': 'Bookmark removed successfully.'})
     
-    return render(request,'home.html')
+        # If the user is not authenticated
+        return JsonResponse({'status': 'error', 'message': 'User not authenticated.'}, status=401)
+def singleprofile(request,id):
+    prf = Profile.objects.get(id=id)
+    context={
+        'bio':prf.bio,
+        'pic':prf.profile_picture.url,
+        'name':prf.username,
+        'dpt' :prf.department
+    }
+    
+    pst = post.objects.filter(user=prf,status='Approved',showing=True)
+    print(len(pst))
+    return render(request,'single_profile.html',{'context':context,'lists':pst})

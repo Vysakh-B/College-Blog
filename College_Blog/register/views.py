@@ -65,7 +65,7 @@ def home(request):
         bookset.append(i.postid.id)
     change = prf.accepted
     # pst = post.objects.all()
-    pst = post.objects.filter(status='Approved')
+    pst = post.objects.filter(status='Approved',showing=True)
     # print(bookset)
     return render(request,'home.html',{'pased':change,'key':pst,'ck':bookset})
     

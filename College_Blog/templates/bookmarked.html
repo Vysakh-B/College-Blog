@@ -96,6 +96,8 @@
 	<section class="section-padding">
 		<div class="container">
 			<div class="row">
+				<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="row">
 						{% for item in books %}
@@ -106,16 +108,65 @@
 								</a>
 								<span class="d-flex flex-row-reverse">
 									<li class="list-inline-item">
-										{% if item.id in ck %}						
-												<a href="{% url 'unbookmark' item.id %}?next=booked"><i class="fas fa-bookmark"></i></a> <!-- Already Bookmarked Icon -->
-											
-										{% else %}
-											<a href="{% url 'bookmark' item.id %}?next=booked">
-												<i class="far fa-bookmark"></i> <!-- Not Bookmarked Icon -->
-											</a>
-										{% endif %}
+										{% if item.id in ck %}
+    								<a href="#" onclick="bookmarkPost(event, {{ item.id }})">
+        								<i id="bookmark-icon-{{ item.id }}" class="fas fa-bookmark"></i>
+    								</a>
+									{% else %}
+    									<a href="#" onclick="bookmarkPost(event, {{ item.id }})">
+        									<i id="bookmark-icon-{{ item.id }}" class="far fa-bookmark"></i>
+    									</a>
+									{% endif %}
+
+
 									</li>
 								</span>
+								<style>
+									.far.fa-bookmark {
+										color: gray;  /* Default color for not bookmarked */
+									}
+									
+									.fas.fa-bookmark {
+										color: gold;  /* Change to gold or preferred color for bookmarked */
+									}
+								</style>
+								<script>
+									document.addEventListener('DOMContentLoaded', function() {
+										function bookmarkPost(event, postId) {
+											event.preventDefault();  // Prevent the default link behavior
+									
+											// Access the CSRF token from the hidden input
+											const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+											const url = `/bookmark/${postId}/`;
+									
+											fetch(url, {
+												method: 'POST',
+												headers: {
+													'Content-Type': 'application/json',
+													'X-CSRFToken': csrfToken
+												}
+											})
+											.then(response => response.json())
+											.then(data => {
+												const iconElement = document.getElementById(`bookmark-icon-${postId}`);
+												if (data.status === 'added') {
+													iconElement.classList.remove('far');
+													iconElement.classList.add('fas');  // Change to solid icon for "bookmarked" state
+												} else if (data.status === 'removed') {
+													iconElement.classList.remove('fas');
+													iconElement.classList.add('far');  // Change back to outline icon for "unbookmarked" state
+												} else {
+													alert('Something went wrong.');
+												}
+											})
+											.catch(error => console.error('Error:', error));
+										}
+									
+										// Attach the function to the global scope for inline onclick use
+										window.bookmarkPost = bookmarkPost;
+									});
+									
+								</script>
 							</span>
 							<!-- <span class="d-flex flex-row-reverse">
 								<li class="list-inline-item"><a href="search.html"><i class="fa-solid fa-bookmark"></i></a></li>
