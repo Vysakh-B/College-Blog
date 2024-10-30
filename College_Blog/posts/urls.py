@@ -15,7 +15,7 @@ urlpatterns = [
     path('bookmark/<int:id>/',views.bookmark,name='bookmark'),
     path('booked',views.booked,name='booked'),
     path('singleprofile/<int:id>/',views.singleprofile,name='singleprofile'),
-
+    path('toggle-like/<int:id>/', views.toggle_like, name='toggle_like'),
     
 
     

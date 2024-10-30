@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import JsonResponse
-from . models import post,Comment,Bookmark
+from . models import post,Comment,Bookmark,Likes
 from django.contrib.auth.models import User
 from register.models import Profile
 
@@ -11,18 +11,24 @@ from django.contrib.auth import get_user_model
 def single(request,id):
     if request.user.is_authenticated:     
         u = request.user
+        likeset = []
         pt = post.objects.get(id=id)
         data = Profile.objects.get(username=pt.user)
         chk = Profile.objects.get(username=u)
         related = post.objects.filter(user=pt.user,status="Approved").exclude(id=pt.id)[:3]
         # cmnts = Comment.objects.filter(post_id=id).select_related('user_id__profile').order_by('commented_at')[:3]
         cmnts = Comment.objects.filter(post_id=id).select_related('user_id').order_by('-commented_at')[:2]
-
+        cmnt_count = cmnts.count()
+        lks = Likes.objects.filter(post_id=id)
+        likes_count = lks.count()
+        Book = Likes.objects.filter(user_id=chk)
+        for i in Book:
+            likeset.append(i.post_id.id)
         # context = {
         # 'comments': cmnts,
         # 'post': pt,  # Example: the post itself
         #             }
-        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts})
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts,'cnt1':cmnt_count,'cnt2':likes_count,'ck':likeset})
         if request.method == 'POST': 
             cmnt =  request.POST['comment'] 
             pos = post.objects.get(id=id)
@@ -318,3 +324,25 @@ def singleprofile(request,id):
     pst = post.objects.filter(user=prf,status='Approved',showing=True)
     print(len(pst))
     return render(request,'single_profile.html',{'context':context,'lists':pst})
+def toggle_like(request,id):
+    try:
+        # post_id = request.POST.get('post_id')  # Get the post ID from the request
+        post_instance = post.objects.get(id=id)  # Fetch the post instance
+        profile_instance = Profile.objects.get(username=request.user)  # Get the user's profile
+
+        # Try to get an existing like or create a new one
+        like, created = Likes.objects.get_or_create(user_id=profile_instance, post_id=post_instance)
+
+        if created:
+            liked = True  # New like created
+        else:
+            like.delete()  # Delete existing like to "unlike" the post
+            liked = False
+
+        return JsonResponse({'liked': liked})
+    except post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)  # Handle post not found
+    except Exception as e:
+        logger.error(f"Error in toggle_like view: {e}")  # Log unexpected errors
+        return JsonResponse({'error': 'Internal server error'}, status=500)
+    

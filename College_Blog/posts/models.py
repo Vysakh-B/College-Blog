@@ -44,3 +44,15 @@ class Bookmark(models.Model):
 
     def __str__(self):
         return f"Bookmark by {self.userid} on {self.postid}"
+class Likes(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey('register.Profile', on_delete=models.CASCADE, related_name="liked_by")
+    post_id = models.ForeignKey('Post', on_delete=models.CASCADE, related_name="liked")
+    liked_at = models.DateTimeField(default=timezone.now)  # DateTime field for the comment date and time
+
+    class Meta:
+        unique_together = ('user_id', 'post_id')  # Ensures a user can't bookmark the same post multiple times
+        
+
+    def __str__(self):
+        return f"Liked by {self.user_id} on {self.post_id}"

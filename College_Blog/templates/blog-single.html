@@ -182,25 +182,80 @@
                             <div
                                 class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
 
-                                <span class="single-comment-o"><i class="fa fa-comment-o"></i>0 comment</span>
+                                <span class="single-comment-o"><i class="fa fa-comment-o"></i>{{ cnt1 }} comment</span>
 
                                 <div class="post-share">
-                                    <span class="count-number-like">2</span>
+                                    <span class="count-number-like">{{ cnt2 }}</span>
                                     <a class="penci-post-like single-like-button"><i class="ti-heart"></i></a>
                                 </div>
 
+
+
                                 <div class="list-posts-share">
-                                    
-                                    <a href="#" onclick="bookmarkPost(event, {{ item.id }})">
-                                        <i id="bookmark-icon-{{ item.id }}" class="fas fa-heart"></i>
+                                    {% if detail.id in ck %}
+                                    <a href="#" onclick="likePost(event,{{ detail.id }})">
+                                        <i id="like-icon-{{ detail.id }}" class="fas fa-heart" style="color:red;"></i>
                                     </a>
+                                    {% else %}
+                                    <a href="#" onclick="likePost(event,{{ detail.id }})">
+                                        <i id="like-icon-{{ detail.id }}" class="far fa-heart" style="color:red;"></i>
+                                    </a>
+                                    {% endif %}
                                     
                                 </div>
+                                
                             </div>
                             {% endif %}
-                        </div>
-                    </div>
 
+                        </div>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            function likePost(event, postId) {
+                                event.preventDefault();  // Prevent the default link behavior
+                                
+                                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // Ensure this matches your hidden input
+
+                                const url = `/toggle-like/${postId}/`;
+
+                        
+                                
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRFToken': csrfToken
+                                        },
+                                        body: JSON.stringify({ post_id: postId })
+                                    })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        // If response is not OK, throw an error to be caught below
+                                        throw new Error(`HTTP error! Status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    const iconElement = document.getElementById(`like-icon-${postId}`);
+                                    if (data.liked) {
+                                        iconElement.classList.remove('far');
+                                        iconElement.classList.add('fas');  // Change to solid icon for "liked" state
+                                    } else {
+                                        iconElement.classList.remove('fas');
+                                        iconElement.classList.add('far');  // Change back to outline icon for "unliked" state
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('Something went wrong.');
+                                });
+                            }
+                        
+                            window.likePost = likePost;
+                        });
+                        
+                    </script>
                     {% if not check.is_admin %}
                     <div class="related-posts-block mt-5">
                         <h3 class="news-title mb-4 text-center">
