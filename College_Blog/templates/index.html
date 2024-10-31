@@ -2,13 +2,6 @@
 {% static "images" as 'baseUrl' %}
 <!DOCTYPE html>
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html lang="en">
 
 <head>
@@ -46,7 +39,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-2 col-md-4 text-center d-none d-lg-block">
 					<a class="navbar-brand " href="index.html">
-						<img src={% static "images/logo.png" %} alt="" class="img-fluid">
+						<img src={% static "images/bloglog.png" %} alt="" class="img-fluid">
 					</a>
 				</div>
 
@@ -67,14 +60,7 @@
 										aria-haspopup="true" aria-expanded="false">
 										Home
 									</a>
-									<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<a class="dropdown-item" href="index.html">Home 1</a>
-										<a class="dropdown-item" href="index-2.html">Home 2</a>
-										<a class="dropdown-item" href="index-3.html">Home 3</a>
-										<a class="dropdown-item" href="index-4.html">Home 4</a>
-										<a class="dropdown-item" href="index-5.html">Home 5</a>
-										<a class="dropdown-item" href="index-6.html">Home 6</a>
-									</div> -->
+									
 								</li>
 								<li class="nav-item"><a href={% url 'signin' %} class="nav-link">Signin</a></li>
 								<li class="nav-item"><a href={% url 'register' %} class="nav-link">Signup</a></li>
@@ -82,19 +68,7 @@
 
 
 								<li class="nav-item"><a href={% url 'magazine' %} class="nav-link">Magazine</a></li>
-								<!-- <li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										Post Format
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-										<a class="dropdown-item" href="post-video.html">Video Formats</a>
-										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a>
-									</div>
-								</li> -->
+								
 								<li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
 
 								<li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li>
@@ -112,7 +86,49 @@
 		</div>
 	</header>
 
-	<section class="slider mt-4">
+	<div class="indexcontainer">
+		<!-- <img src={% static "images/about.jpg" %} alt="" class="img-fluid w-100"> -->
+<div class="texts">
+	<h1>BlogBeyond</h1>
+<h4>Meet our Creators</h4>
+</div>
+
+	</div>
+	<style>
+		.indexcontainer{
+			width: 100vw;
+			height: 100vh;
+			background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('{% static "images/university.webp" %}');
+			background-repeat: no-repeat;
+  			background-position: center;
+  			background-size: cover;
+			  object-fit: contain;
+			  
+		}
+		.texts{
+			
+			width: 500px;
+			height: 300px;
+			margin-left: 50px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.texts h1{
+			color: antiquewhite;
+			font-size: 80px;
+			margin-top: 100px;
+		}
+		.texts h4{
+			font-size: 20px;
+			color: white;
+			margin-top: 11px;
+
+		}
+
+
+	</style>
+	{% comment %} <section class="slider mt-4">
 		<div class="container-fluid">
 			<div class="row no-gutters">
 				<div class="col-lg-12 col-sm-12 col-md-12 slider-wrap">
@@ -138,7 +154,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> {% endcomment %}
 
 	<section class="section-padding">
 		<div class="container">

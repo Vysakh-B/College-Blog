@@ -27,7 +27,7 @@ def index(request):
     # ch = request.user
     # prf = Profile.objects.get(username=ch)
     # change = prf.accepted
-    pst = post.objects.filter(status='Approved')
+    pst = post.objects.filter(status='Approved',showing=True)[:4]
     return render(request,'index.html',{'key':pst})
     # return render(request,'index.html')    
 
