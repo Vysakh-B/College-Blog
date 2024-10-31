@@ -59,26 +59,9 @@
 						</button>
 
 						<div class="collapse navbar-collapse" id="navbar-collapse">
-							<form action="">
-                                <div class="input-group mb-4">
-                                  <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon5" class="form-control">
-                                  <div class="input-group-append">
-                                    <button id="button-addon5" type="submit" class="btn btn-primary"><i class="ti-search"></i></button>
-                                  </div>
-                                
-                              </form>
-
-							<!-- <ul class="list-inline mb-0 d-block d-lg-none">
-								<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
-							</ul> -->
-                            <style>.form-control::placeholder {
-                                font-size: 0.95rem;
-                                color: #aaa;
-                                font-style: italic;
-                              }</style>
+							<p>
+								Search related to query "{{ qry }}"
+							</p>
 						</div>
 					</nav>
 				</div>
@@ -94,86 +77,20 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="row">
+						{% for k in items %}
 						<div class="col-lg-3 col-md-6">
 							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f1.jpg" %} alt="" class="img-fluid w-100">
+								<a class="post-thumb mb-4 d-block" href={% url 'single'  k.id %}>
+									<img src={{ k.blog_picture.url }} alt="" class="img-fluid w-100">
 								</a>
 								<span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">Explore</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>The best place to explore to enjoy</a></h3>
+								<h3 class="post-title mt-1"><a href={% url 'single' 9 %}>{{ k.title }}</a></h3>
 
-								<span class="text-muted letter-spacing text-uppercase font-sm">June 15, 2019</span>
-
-							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f2.jpg" %} alt="" class="img-fluid w-100">
-								</a>
-								<span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Lifestyle</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>How to Make list for travelling alone</a></h3>
-
-								<span class="text-muted letter-spacing text-uppercase font-sm">September 15, 2019</span>
+								<span class="text-muted letter-spacing text-uppercase font-sm">{{ k.created_at }}</span>
 
 							</article>
 						</div>
-						<div class="col-lg-3 col-md-6">
-							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f3.jpg" %} alt="" class="img-fluid w-100">
-								</a>
-								<span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing">Food</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>5 ingredient cilantro vinaigrette</a></h3>
-
-								<span class="text-muted letter-spacing text-uppercase font-sm">September 15, 2019</span>
-
-							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f4.jpg" %} alt="" class="img-fluid w-100">
-								</a>
-								<span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Explore</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>A Simple Way to Feel Like Home When You
-										Travel</a></h3>
-
-								<span class="text-muted letter-spacing text-uppercase font-sm">March 20, 2019</span>
-
-							</article>
-						</div>
-						
-						
-						
-						
-
-						<div class="col-lg-3 col-md-6">
-							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f11.jpg" %} alt="" class="img-fluid w-100">
-								</a>
-								<span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>8 Powerful Ways to Add Vibrant Colour to Your
-										Life</a></h3>
-
-								<span class="text-muted letter-spacing text-uppercase font-sm">August 15, 2019</span>
-
-							</article>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<article class="post-grid mb-5">
-								<a class="post-thumb mb-4 d-block" href={% url 'single' %}>
-									<img src={% static "images/news/f12.jpg" %} alt="" class="img-fluid w-100">
-								</a>
-								<span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing">Lifestyle</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' %}>The best to-do list to help boost your
-										productivity</a></h3>
-
-								<span class="text-muted letter-spacing text-uppercase font-sm">October 2, 2019</span>
-
-							</article>
-						</div>
+						{% endfor %}
 					</div>
 				</div>
 

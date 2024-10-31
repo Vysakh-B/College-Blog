@@ -23,7 +23,7 @@ def single(request,id):
         likes_count = lks.count()
         Book = Likes.objects.filter(user_id=chk)
         for i in Book:
-            likeset.append(i.post_id.id)
+            likeset.append(i.post_id)
         # context = {
         # 'comments': cmnts,
         # 'post': pt,  # Example: the post itself
@@ -116,7 +116,10 @@ def editpost(request,post_id):
         return redirect('profile')
     return render(request,'edit_post.html',{'context':context})
 def search(request):
-    return render(request,'search.html')
+    query = request.GET.get('srch')
+    if query:
+        posts=post.objects.filter(title__icontains=query,showing=True,status="Approved")
+    return render(request,'search.html',{'items':posts,'qry':query})
 def edit(request):
     if request.method == 'POST':
         # user = User.objects.get(id=request.session.get('ids'))

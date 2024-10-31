@@ -1,13 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html lang="en">
 
 <head>
@@ -72,19 +65,7 @@
 								<li class="nav-item"><a href={% url 'create' %} class="nav-link">Create</a></li>
 								{% endif %}
 								
-								<!-- <li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										Post Format
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-										<a class="dropdown-item" href="post-video.html">Video Formats</a>
-										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a>
-									</div>
-								</li> -->
+								
 								<li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
 
 								<li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li>
@@ -103,28 +84,33 @@
 										<a class="dropdown-item" href="post-image.html">Image Format</a> -->
 									</div>
 								</li>
+								
 							</ul>
 
-							<ul class="list-inline mb-0 d-block d-lg-none">
-								<li class="list-inline-item"><a href={% url 'search' %} ><i class="ti-search"></i></a></li>
-
-								<!-- <li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li> -->
-							</ul>
+							
 						</div>
+						
 					</nav>
+					<form action="{% url 'search' %}" style="margin-top:18px;" method='get'>
+						{% csrf_token %}
+						<div class="input-group mb-4">
+						  <input type="search" placeholder="What're you searching for?" name='srch' aria-describedby="button-addon5" class="form-control">
+						  <div class="input-group-append">
+							<button id="button-addon5" type="submit" class="btn btn-primary" ><i class="ti-search"></i></button>
+						  </div>
+						
+					  </form>
+
+					
+					<style>.form-control::placeholder {
+						font-size: 0.95rem;
+						color: #aaa;
+						font-style: italic;
+					  }</style>
 				</div>
 
 				<div class="col-lg-2 col-md-4 col-6">
-					<div class="header-socials-2 text-right d-none d-lg-block">
-						<ul class="list-inline mb-0">
-							<li class="list-inline-item"><a href={% url 'search' %}><i class="ti-search"></i></a></li>
-							<!-- <li class="list-inline-item"><a href="#"><i class="ti-lense"></i></a></li> -->
-							<!-- <li class="list-inline-item"><a href="#"><i class="ti-search"></i></a></li> -->
-							<!-- <li class="list-inline-item"><a href="#"><i class="ti-search"></i></a></li> -->
-						</ul>
-					</div>
+					
 				</div>
 			</div>
 		</div>
