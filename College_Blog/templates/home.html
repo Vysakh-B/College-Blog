@@ -39,14 +39,14 @@
 			<div class="row align-items-center">
 				<div class="col-lg-2 col-md-4 text-center d-none d-lg-block">
 					<a class="navbar-brand " href={% url 'home' %}>
-						<img src={% static "images/logo.png"  %} alt="" class="img-fluid">
+						<img src={% static "images/blogbyond.png"  %} alt="" class="img-fluid">
 					</a>
 				</div>
 
 				<div class="col-lg-8 col-md-12">
 					<nav class="navbar navbar-expand-lg navigation-2 navigation">
 						<a class="navbar-brand text-uppercase d-lg-none" href={% url 'home' %}>
-							<img src={% static "images/logo.png"  %} alt="" class="img-fluid">
+							<img src={% static "images/blogbyond.png"  %} alt="" class="img-fluid">
 						</a>
 						<button class="navbar-toggler" type="button" data-toggle="collapse"
 							data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
@@ -234,7 +234,7 @@
 					</div>
 				</div>
 
-				<div class="m-auto">
+				{% comment %} <div class="m-auto">
 					<div class="pagination mt-5 pt-4">
 						<ul class="list-inline ">
 							<li class="list-inline-item"><a href="#" class="active">1</a></li>
@@ -244,7 +244,7 @@
 										class="ti-arrow-right"></i></a></li>
 						</ul>
 					</div>
-				</div>
+				</div> {% endcomment %}
 			</div>
 		</div>
 	</section>
