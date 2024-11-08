@@ -62,7 +62,7 @@
 
 						<div class="collapse navbar-collapse" id="navbar-collapse">
 							<ul id="menu" class="menu navbar-nav mx-auto">
-								<li class="nav-item"><a href={% url 'pending' %} class="nav-link">Pending Post</a></li>
+								<li class="nav-item"><a href={% url 'adminhome' %} class="nav-link">Pending Post</a></li>
 								<li class="nav-item"><a href={% url 'userpending' %} class="nav-link">User Pending</a></li>
 								<li class="nav-item"><a href={% url 'reports' %} class="nav-link">Reports</a></li>
 
@@ -118,30 +118,31 @@
         }
     </style>
 	
-    <h2>User Information Table</h2>
+    <h2>Reports</h2>
 
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Department</th>
-                <th>Reg No</th>
-                <th>Status</th>
-                <th>Bio</th>
+                <th>Post Id</th>
+                
+                <th>Comment</th>
+                <th>Count</th>
+                <th>Delete</th>
+
+                
             </tr>
         </thead>
         <tbody>
-            {% for i in set %}
+            {% for i in count %}
             <tr>
                 <td>{{ i.id }}</td>
-                <td>{{ i.username }}</td>
-                <td>{{ i.email }}</td>
-                <td>{{ i.get_department_display }}</td>
-                <td>{{ i.register_no }}</td>
-                <td><a href={% url 'acceptuser' i.id %}>Accept</a></td>
-                <td>{{ i.bio }}</td>
+                <td><a href={% url 'single' i.id %}>View Commented Post</a></td>
+               
+                <td>{{ i.comment_description }}</td>
+                <td>{{ i.report_count }}</td>
+                <td><a href={% url 'removecomment' i.id %}>Remove</a></td>
+                
             </tr>
             {% endfor %}
             <!-- Add more rows as needed -->

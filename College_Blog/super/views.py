@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 # from .forms import UserRegistrationForm
 from django.contrib import messages
 from register.models import Profile
-from posts.models import post
+from posts.models import post,Comment
 from . models import Magazine
 # from .forms import LoginForm
 from django.contrib.auth import login,authenticate
@@ -123,3 +123,12 @@ def acceptuser(request,id):
     appr.save()
     profiles = Profile.objects.filter(accepted=False)
     return render(request,'user_pending.html',{'set':profiles})
+def reports(request):
+    reported_comments = Comment.objects.filter(report_count__gt=0).order_by('-report_count')
+    return render(request,'reports.html',{'count':reported_comments})
+def removecomment(request,id):
+    reported = Comment.objects.get(id=id)
+    reported.delete()
+    reported_comments = Comment.objects.filter(report_count__gt=0).order_by('-report_count')
+    return render(request,'reports.html',{'count':reported_comments})
+

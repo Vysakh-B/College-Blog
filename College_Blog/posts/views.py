@@ -21,14 +21,14 @@ def single(request,id):
         cmnt_count = cmnts.count()
         lks = Likes.objects.filter(post_id=id)
         likes_count = lks.count()
-        Book = Likes.objects.filter(user_id=chk)
-        for i in Book:
-            likeset.append(i.post_id)
+        Book = Likes.objects.filter(user_id=chk,post_id=id)
+        # for i in Book:
+        #     likeset.append(i.post_id)
         # context = {
         # 'comments': cmnts,
         # 'post': pt,  # Example: the post itself
         #             }
-        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts,'cnt1':cmnt_count,'cnt2':likes_count,'ck':likeset})
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts,'cnt1':cmnt_count,'cnt2':likes_count,'ck':Book})
         if request.method == 'POST': 
             cmnt =  request.POST['comment'] 
             pos = post.objects.get(id=id)

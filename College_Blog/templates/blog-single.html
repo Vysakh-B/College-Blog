@@ -39,7 +39,7 @@
 <body>
 
 
-    <div class="header-logo py-5 d-none d-lg-block">
+    {% comment %} <div class="header-logo py-5 d-none d-lg-block">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 text-center">
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 
     <header class="header-top bg-grey justify-content-center">
         <nav class="navbar navbar-expand-lg navigation">
@@ -192,7 +192,7 @@
 
 
                                 <div class="list-posts-share">
-                                    {% if detail.id in ck %}
+                                    {% if ck %}
                                     <a href="#" onclick="likePost(event,{{ detail.id }})">
                                         <i id="like-icon-{{ detail.id }}" class="fas fa-heart" style="color:red;"></i>
                                     </a>
@@ -279,7 +279,8 @@
                         </div>
                     </div>
                     {% endif %}
-                    {% if not check.is_admin %}
+                    {% if not check.is_admin  %}
+                    {% if detail.status == "Approved" %}
                     <div class="comment-area my-5">
                         <h3 class="mb-4 text-center">2 Comments</h3>
                         {% for c in cmntss %}
@@ -324,7 +325,9 @@
                         {% endfor %}
                     </div>
                     {% endif %}
+                    {% endif %}
                     {% if not check.is_admin %}
+                    {% if detail.status == "Approved" %}
                     <form class="comment-form mb-5 gray-bg p-5" id="comment-form" method="POST" action="{% url 'addcomment' detail.id %}">
                         {% csrf_token %}
                         <h3 class="mb-4 text-center">Leave a comment</h3>
@@ -340,6 +343,8 @@
                             value="Submit Comment"></a>
                     </form>
                     {% endif %}
+                    {% endif %}
+
                     <!-- The Modal (initially hidden) -->
 <div id="commentModal" class="modal" style="display:none;">
     <div class="modal-content">

@@ -10,8 +10,11 @@ urlpatterns = [
     path('accept/<int:id>/',views.accept,name="accept"),
     path('magazine/<int:id>/',views.magazine,name="magazines"),
     path('acceptuser/<int:id>/',views.acceptuser,name="acceptuser"),
+    path('removecomment/<int:id>/',views.removecomment,name="removecomment"),
     path('user_pending',views.userpending,name="userpending"),
     path('viewmagazine',views.viewmagazine,name='magazine'),
+    path('reports',views.reports,name='reports'),
+
     
     # path('signin',views.signin,name='signin'),
     #path('logout',views.logout,name='logout'),
