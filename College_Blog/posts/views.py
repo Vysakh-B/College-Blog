@@ -57,9 +57,26 @@ def create(request):
         tg=False
         us = request.user
         fil = Profile.objects.get(username=us)
-        title = request.POST['title']
-        content = request.POST['content']
+        title = request.POST['title'].strip()
+        content = request.POST['content'].strip()
         image = request.FILES.get('imgs')
+        if not title:
+            tg = True
+            dis = "Title is required."
+            return render(request, 'create.html', {'err': dis, 'ck': tg})
+
+            # Check if content is provided
+        if not content:
+            tg = True
+            dis = "Content is required."
+            return render(request, 'create.html', {'err': dis, 'ck': tg})
+
+        # Check if image is provided
+        if not image:
+            tg = True
+            dis = "Image is required."
+            return render(request, 'create.html', {'err': dis, 'ck': tg})
+
         if image:
             # Validate file size (e.g., max 5MB)
             max_size = 5 * 1024 * 1024  # 5MB
@@ -69,7 +86,7 @@ def create(request):
                 return render(request,'create.html',{'err': dis,'ck':tg }) # Redirect back to the create page
 
             # Validate file type (e.g., only allowing JPEG and PNG)
-            valid_mime_types = ['image/jpeg']
+            valid_mime_types = ['image/jpeg','image/png']
             if image.content_type not in valid_mime_types:
                 tg=True
                 dis = "Unsupported file type. Only JPEG and PNG are allowed"
@@ -121,42 +138,54 @@ def search(request):
         posts=post.objects.filter(title__icontains=query,showing=True,status="Approved")
     return render(request,'search.html',{'items':posts,'qry':query})
 def edit(request):
-    if request.method == 'POST':
-        # user = User.objects.get(id=request.session.get('ids'))
-        dis = ""
-        tg=False
-        us = request.user
-        bio = request.POST['bio']
-        image = request.FILES.get('pimgs')
-        if image:
-            # Validate file size (e.g., max 5MB)
-            max_size = 5 * 1024 * 1024  # 5MB
-            if image.size > max_size:
-                tg=True
-                dis = "Image file too large ,Consider less than 5 MB"
-                return render(request,'edit.html',{'err': dis,'ck':tg }) # Redirect back to the create page
+    dis = ""
+    tg = False
+    us = request.user
+    bio = request.POST.get('bio','')
+    image = request.FILES.get('pimgs')
 
-            # Validate file type (e.g., only allowing JPEG and PNG)
-            valid_mime_types = ['image/jpeg','image/png']
-            if image.content_type not in valid_mime_types:
-                tg=True
-                dis = "Unsupported file type. Only JPEG and PNG are allowed"
-                return render(request,'edit.html',{'err': dis,'ck':tg }) # Redirect back to the create page
-        # Get the current user's profile
-        profile = Profile.objects.get(username=us)
+    # Check if the bio is empty
+    if not bio.strip():  # Ensures bio isn't just whitespace
+        tg = True
+        dis = "Bio cannot be empty."
+        return render(request, 'edit.html', {'err': dis, 'ck': tg})  # Redirect back with error
 
-        # Update the bio field
-        profile.bio = bio
+    # If an image is provided, validate its size and type
+    if image:
+        # Validate file size (e.g., max 5MB)
+        max_size = 5 * 1024 * 1024  # 5MB
+        if image.size > max_size:
+            tg = True
+            dis = "Image file too large. Please use an image less than 5 MB."
+            return render(request, 'edit.html', {'err': dis, 'ck': tg})  # Redirect back with error
 
-        # Update the profile_picture field if a new picture is uploaded
-        if image:
-            profile.profile_picture = image
+        # Validate file type (e.g., only allowing JPEG and PNG)
+        valid_mime_types = ['image/jpeg', 'image/png']
+        if image.content_type not in valid_mime_types:
+            tg = True
+            dis = "Unsupported file type. Only JPEG and PNG are allowed."
+            return render(request, 'edit.html', {'err': dis, 'ck': tg})  # Redirect back with error
 
-        # Save the updated profile
-        profile.save()
-        return redirect('home')
-    # return render(request,'create.html') 
-    return render(request,'edit.html')
+    # Get the current user's profile
+    profile = Profile.objects.get(username=us)
+
+    # Update the bio field
+    profile.bio = bio
+
+    # Update the profile_picture field if a new picture is uploaded
+    if image:
+        profile.profile_picture = image
+
+    # Save the updated profile
+    profile.save()
+    dis = "Profile updated succesfully."
+    return render(request, 'edit.html', {'err': dis, 'ck': tg})  # Redirect back with error
+    
+    # return redirect('home')
+
+    # If GET request, render edit form
+    return render(request, 'edit.html')
+
 def addcomment(request,post_id):
     u=request.user
     err = ""
@@ -167,7 +196,7 @@ def addcomment(request,post_id):
         tg=False
         prf = post.objects.get(id=post_id)
         prf_id = Profile.objects.get(username=u)
-        comment = request.POST.get('comment')
+        comment = request.POST.get('comment').strip()
     
         if comment == "":
             tg=True

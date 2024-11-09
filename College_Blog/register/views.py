@@ -11,7 +11,7 @@ from posts.models import post,Bookmark
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
-
+import re
 
 
 
@@ -81,12 +81,42 @@ def register(request):
             err = "user already exists"
             ch = True
             # return redirect('register')
-            return render(request,'register.html',{'data':err,'chk':ch })
-
-            
-
-                    
+            return render(request,'register.html',{'data':err,'chk':ch })             
         else:
+            if not re.match(r'^[A-Za-z]+$', username):
+                err = "Username must contain only letters without numbers or special characters"
+                ch = True
+                # return redirect('register')
+                return render(request,'register.html',{'data':err,'chk':ch })  
+
+            # 2. Email validation: valid email format
+            # try:
+            #     validate_email(email)
+            # except ValidationError:
+            #     err = "Enter a valid email address"
+            #     ch = True
+            #     # return redirect('register')
+            #     return render(request,'register.html',{'data':err,'chk':ch })
+        
+            # 3. Password validation: minimum 8 characters
+            if len(password) < 8:
+                err = "Password must be at least 8 characters long."
+                ch = True
+                # return redirect('register')
+                return render(request,'register.html',{'data':err,'chk':ch })
+                
+        
+            # 4. Register number validation: must start with "MZC" if department is not "OTHERS"
+            if department != 'OTHERS' and not reg.startswith("MZC"):
+                err = "Register number must start with 'MZC'"
+                ch = True
+                # return redirect('register')
+                return render(request,'register.html',{'data':err,'chk':ch })
+                
+        
+            # Proceed with further processing if validation passes
+            # (e.g., save the form, return success response)
+            # ... 
 
             user=User.objects.create_user(username = username,email=email,password=password)
             print(username)
