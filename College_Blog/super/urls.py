@@ -14,6 +14,8 @@ urlpatterns = [
     path('user_pending',views.userpending,name="userpending"),
     path('viewmagazine',views.viewmagazine,name='magazine'),
     path('reports',views.reports,name='reports'),
+    path('newadmin',views.newadmin,name='newadmin'),
+
 
     
     # path('signin',views.signin,name='signin'),

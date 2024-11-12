@@ -45,14 +45,14 @@
 			<div class="row align-items-center">
 				<div class="col-lg-2 col-md-4 text-center d-none d-lg-block">
 					<a class="navbar-brand " href={% url 'adminhome' %}>
-						<img src={% static "images/logo.png"  %} alt="" class="img-fluid">
+						<img src={% static "images/blogbyond.png"  %} alt="" class="img-fluid">
 					</a>
 				</div>
 
 				<div class="col-lg-8 col-md-12">
 					<nav class="navbar navbar-expand-lg navigation-2 navigation">
 						<a class="navbar-brand text-uppercase d-lg-none" href={% url 'adminhome' %}>
-							<img src={% static "images/logo.png"  %} alt="" class="img-fluid">
+							<img src={% static "images/blogbyond.png"  %} alt="" class="img-fluid">
 						</a>
 						<button class="navbar-toggler" type="button" data-toggle="collapse"
 							data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
@@ -63,34 +63,11 @@
 						<div class="collapse navbar-collapse" id="navbar-collapse">
 							<ul id="menu" class="menu navbar-nav mx-auto">
 								<li class="nav-item"><a href={% url 'pending' %} class="nav-link">Pending Post</a></li>
-								<li class="nav-item"><a href={% url 'userpending' %} class="nav-link">User Pending</a></li>
+								<li class="nav-item"><a href={% url 'userpending' %} class="nav-link">Users</a></li>
 								<li class="nav-item"><a href={% url 'reports' %} class="nav-link">Reports</a></li>
-
-
-
-								{% comment %} <li class="nav-item"><a href={% url 'feed' %} class="nav-link">Feed</a></li>
-								{% if pased  %}
-
-
-								<li class="nav-item"><a href={% url 'create' %} class="nav-link">Create</a></li>
-								{% endif %}
-								 {% endcomment %}
-								<!-- <li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										Post Format
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-										<a class="dropdown-item" href="post-video.html">Video Formats</a>
-										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a>
-									</div>
-								</li> -->
-								{% comment %} <li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
-								<li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li> {% endcomment %}
 								<li class="nav-item"><a href={% url 'magazine' %} class="nav-link">Magazine</a></li>
+								<li class="nav-item"><a href={% url 'newadmin' %} class="nav-link">NewAdmin</a></li>
+
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">
@@ -99,10 +76,7 @@
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
 										<a class="dropdown-item" href={% url 'profile' %}>Profile</a>
 										<a class="dropdown-item" href={% url 'logout' %}>Logout</a>
-										<!-- <a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a> -->
+										
 									</div>
 								</li>
 							</ul>

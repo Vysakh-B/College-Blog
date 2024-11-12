@@ -9,7 +9,7 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User,auth
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+import re
 # Create your views here.
 def superu(request):
     if request.method=='POST':
@@ -115,7 +115,7 @@ def reject(request,post_id):
     psts = post.objects.filter(status='Approved')
     return render(request,'admin_home.html',{'key':psts})
 def userpending(request):
-    profiles = Profile.objects.filter(accepted=False)
+    profiles = Profile.objects.filter(accepted=False,is_admin=False)
     return render(request,'user_pending.html',{'set':profiles})
 def acceptuser(request,id):
     appr = Profile.objects.get(id=id)
@@ -131,4 +131,45 @@ def removecomment(request,id):
     reported.delete()
     reported_comments = Comment.objects.filter(report_count__gt=0).order_by('-report_count')
     return render(request,'reports.html',{'count':reported_comments})
+def newadmin(request):
+    if request.method == 'POST':
+        username = request.POST['username'] 
+        email = request.POST['email']
+        password = request.POST['password']
+        ch = False 
+        if User.objects.filter(username=username).exists():
+            print('email already exist!!')
+            err = "user already exists"
+            ch = True
+            # return redirect('register')
+            return render(request,'newadmin.html',{'data':err,'chk':ch })             
+        else:
+            if not re.match(r'^[A-Za-z]+$',username):
+                err = "Username must contain only letters without numbers or special characters"
+                ch = True
+                # return redirect('register')
+                return render(request,'newadmin.html',{'data':err,'chk':ch })  
+
+            
+            if len(password) < 8:
+                err = "Password must be at least 8 characters long."
+                ch = True
+                # return redirect('register')
+                return render(request,'newadmin.html',{'data':err,'chk':ch })
+                
+        
+            
+
+            user=User.objects.create_user(username = username,email=email,password=password)
+            print(username)
+            user.save()
+            department="Other"
+            
+            reg="NONE"
+            prf = Profile.objects.create(username=username,email=email,department=department,register_no=reg,is_admin=True)
+            prf.save()
+            return redirect('adminhome')
+            # return render(request,'register.html')
+
+    return render(request,'newadmin.html')
 
