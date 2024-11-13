@@ -45,14 +45,14 @@
 			<div class="row align-items-center">
 				<div class="col-lg-2 col-md-4 text-center d-none d-lg-block">
 					<a class="navbar-brand " href={% url 'adminhome' %}>
-						<img src={% static "images/logo.png"  %} alt="" class="img-fluid">
+						<img src={% static "images/blogbyond.png"  %} alt="" class="img-fluid">
 					</a>
 				</div>
 
 				<div class="col-lg-8 col-md-12">
 					<nav class="navbar navbar-expand-lg navigation-2 navigation">
 						<a class="navbar-brand text-uppercase d-lg-none" href={% url 'adminhome' %}>
-							<img src={% static "images/logo.png"  %} alt="" class="img-fluid">
+							<img src={% static "images/blogbyond.png"  %} alt="" class="img-fluid">
 						</a>
 						<button class="navbar-toggler" type="button" data-toggle="collapse"
 							data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
@@ -68,28 +68,8 @@
 
 
 
-								{% comment %} <li class="nav-item"><a href={% url 'feed' %} class="nav-link">Feed</a></li>
-								{% if pased  %}
-
-
-								<li class="nav-item"><a href={% url 'create' %} class="nav-link">Create</a></li>
-								{% endif %}
-								 {% endcomment %}
-								<!-- <li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										Post Format
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-										<a class="dropdown-item" href="post-video.html">Video Formats</a>
-										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a>
-									</div>
-								</li> -->
-								{% comment %} <li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
-								<li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li> {% endcomment %}
+								
+								
 								<li class="nav-item"><a href={% url 'magazine' %} class="nav-link">Magazine</a></li>
 								<li class="nav-item"><a href={% url 'newadmin' %} class="nav-link">Newadmin</a></li>
 
@@ -101,10 +81,7 @@
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
 										<a class="dropdown-item" href={% url 'profile' %}>Profile</a>
 										<a class="dropdown-item" href={% url 'logout' %}>Logout</a>
-										<!-- <a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a> -->
+										
 									</div>
 								</li>
 							</ul>
@@ -112,55 +89,17 @@
 							<ul class="list-inline mb-0 d-block d-lg-none">
 								<li class="list-inline-item"><a href={% url 'search' %} ><i class="ti-search"></i></a></li>
 
-								<!-- <li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li> -->
 							</ul>
 						</div>
 					</nav>
 				</div>
 
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="header-socials-2 text-right d-none d-lg-block">
-						<ul class="list-inline mb-0">
-							<li class="list-inline-item"><a href={% url 'search' %}><i class="ti-search"></i></a></li>
-							<!-- <li class="list-inline-item"><a href="#"><i class="ti-lense"></i></a></li> -->
-							<!-- <li class="list-inline-item"><a href="#"><i class="ti-search"></i></a></li> -->
-							<!-- <li class="list-inline-item"><a href="#"><i class="ti-search"></i></a></li> -->
-						</ul>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</header>
 
-	{% comment %} <section class="slider mt-4">
-		<div class="container-fluid">
-			<div class="row no-gutters">
-				<div class="col-lg-12 col-sm-12 col-md-12 slider-wrap">
-					{% for post in key|slice:":5" %}
-					<div class="slider-item">
-						<div class="slider-item-content">
-							<div class="post-thumb mb-4">
-								<a href={% url 'single' post.id %}>
-									<img src={{ post.blog_picture.url }} alt="" class="img-fluid" style="object-fit: cover;object-position: center;">
-								</a>
-							</div>
-
-							<div class="slider-post-content">
-								<span
-									class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">{{ post.user }}</span>
-								<h3 class="post-title mt-1"><a href={% url 'single' post.id %}>{{ post.title }}</a></h3>
-								<span class=" text-muted  text-capitalize">{{ post.created_at }}</span>
-							</div>
-						</div>
-					</div>
-                    {% endfor %}
-					
-				</div>
-			</div>
-		</div>
-	</section> {% endcomment %}
+	
 
 	<section class="section-padding">
 		<div class="container">

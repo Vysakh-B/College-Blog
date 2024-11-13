@@ -160,9 +160,9 @@
                             {% if check.is_admin %}
                             {% if detail.status == "Approved" %}
                             <div class="post-tags py-4">
-                                {% comment %} #Health {% endcomment %}
-                                {% comment %} <a href={% url 'accept' detail.id %} ><button type='button' class='btn btn-success'>Accept</button></a> {% endcomment %}
+                                {% if detail.id not in magz %}
                                 <a href={% url 'magazines' detail.id %}><button type="button" class="btn btn-success">Magazine</button></a>
+                                {% endif %}
                             </div>
                             {% endif %}
                             {% if detail.status == "Pending" %}

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from . models import post,Comment,Bookmark,Likes
 from django.contrib.auth.models import User
 from register.models import Profile
-
+from django.apps import apps
 from django.contrib.auth import get_user_model
 
 # Create your views here.
@@ -13,6 +13,8 @@ def single(request,id):
         u = request.user
         likeset = []
         pt = post.objects.get(id=id)
+        Magazine = apps.get_model('super', 'Magazine')
+        magazine_post_ids = set(Magazine.objects.values_list('post_id', flat=True))
         data = Profile.objects.get(username=pt.user)
         chk = Profile.objects.get(username=u)
         related = post.objects.filter(user=pt.user,status="Approved").exclude(id=pt.id)[:3]
@@ -28,7 +30,7 @@ def single(request,id):
         # 'comments': cmnts,
         # 'post': pt,  # Example: the post itself
         #             }
-        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts,'cnt1':cmnt_count,'cnt2':likes_count,'ck':Book})
+        return render(request,'blog-single.html',{'detail':pt,'data':data,'check':chk,'related':related,'cmntss':cmnts,'cnt1':cmnt_count,'cnt2':likes_count,'ck':Book,'magz':magazine_post_ids})
         if request.method == 'POST': 
             cmnt =  request.POST['comment'] 
             pos = post.objects.get(id=id)

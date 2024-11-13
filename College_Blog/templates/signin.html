@@ -1,11 +1,5 @@
 {% load static %}
 <!DOCTYPE html>
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
 
 <html lang="en">
 
@@ -66,44 +60,18 @@
 								<li class="nav-item"><a href={% url 'register' %} class="nav-link">Signup</a></li>
 
 								<li class="nav-item"><a href={% url 'magazine' %} class="nav-link">Magazine</a></li>
-								<!-- <li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										Post Format
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-										<a class="dropdown-item" href="post-video.html">Video Formats</a>
-										<a class="dropdown-item" href="post-audio.html">Audio Format</a>
-										<a class="dropdown-item" href="post-link.html">Quote Format</a>
-										<a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-										<a class="dropdown-item" href="post-image.html">Image Format</a>
-									</div>
-								</li> -->
+								
 								<li class="nav-item"><a href={% url 'about' %} class="nav-link">About</a></li>
 
 								{% comment %} <li class="nav-item"><a href={% url 'contact' %} class="nav-link">Contact</a></li> {% endcomment %}
 							</ul>
 
-							<!-- <ul class="list-inline mb-0 d-block d-lg-none">
-								<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
-								<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
-							</ul> -->
+							
 						</div>
 					</nav>
 				</div>
 
-				<!-- <div class="col-lg-2 col-md-4 col-6">
-					<div class="header-socials-2 text-right d-none d-lg-block">
-						<ul class="list-inline mb-0">
-							<li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
-						</ul>
-					</div>
-				</div> -->
+				
 			</div>
 		</div>
 	</header>
@@ -116,7 +84,7 @@
         <div class="wrapper">
             <form class="form-signin" method="POST">
                 {% csrf_token %}
-                <h2 class="form-signin-heading">Student Login</h2>
+                <h2 class="form-signin-heading">User Login</h2>
                 
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Username " required="" autofocus="" />
@@ -207,18 +175,7 @@
                     <div class="col-lg-6">
                         <div class="subscribe-footer text-center">
                             <div class="form-group mb-0">
-                                <h2 class="mb-3">Subscribe Newsletter</h2>
-                                <p class="mb-4">Subscribe my Newsletter for new blog posts , tips and info.
-                                <p>
-                                <div class="form-group form-row align-items-center mb-0">
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" placeholder="Email Address">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <a href="#" class="btn btn-dark ">Subscribe</a>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -229,7 +186,7 @@
                             <ul class="list-inline footer-socials-2 text-center">
                                 <li class="list-inline-item"><a href="#">Privacy policy</a></li>
                                 <li class="list-inline-item"><a href="#">Support</a></li>
-                                <li class="list-inline-item"><a href="#">About</a></li>
+                                <li class="list-inline-item"><a href={% url 'about' %}>About</a></li>
                                 <li class="list-inline-item"><a href="#">Contact</a></li>
                                 <li class="list-inline-item"><a href="#">Terms</a></li>
                                 <li class="list-inline-item"><a href="#">Category</a></li>
@@ -238,10 +195,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
-                            <div class="copyright text-center ">
-                                @ copyright all reserved to <a href="https://themefisher.com/">themefisher.com</a>-2019
-                                Distribution <a href="https://themewagon.com">ThemeWagon.</a></p>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -249,9 +203,7 @@
         </section>
 
 
-        <!-- THEME JAVASCRIPT FILES
-================================================== -->
-        <!-- initialize jQuery Library -->
+
         <script src={% static "plugins/jquery/jquery.js" %}></script>
         <!-- Bootstrap jQuery -->
         <script src={% static "plugins/bootstrap/js/bootstrap.min.js" %}></script>
